@@ -14,10 +14,10 @@ public class Coordinates {
      * @param column the column of a 2D array. 
      */
     public Coordinates(int row, int column) {
-        if (row<0 && row>4) {
+        if (row < 0 && row > 4) {
             throw new IllegalArgumentException("The row must be included between 0 and 4");
         }
-        if (column<0 && column>5) {
+        if (column < 0 && column > 5) {
             throw new IllegalArgumentException("The column must be included between 0 and 4");
         }
         this.row = row;

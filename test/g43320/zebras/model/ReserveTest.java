@@ -8,29 +8,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Initialize the tests for the methods of the class Reserve.
+ * Initialize the JUnit tests for the methods of the class Reserve.
+ *
  * @author s_u_y_s_a
  */
 public class ReserveTest {
-    
-    public ReserveTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of isFree method, of class Reserve.
@@ -38,22 +20,22 @@ public class ReserveTest {
     @Test
     public void testIsFree1() {
         System.out.println("isFree");
-        Coordinates pos = new Coordinates(4,4);
+        Coordinates pos = new Coordinates(4, 4);
         Reserve instance = new Reserve();
         boolean expResult = true;
         boolean result = instance.isFree(pos);
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of isFree method, of class Reserve.
      */
     @Test
     public void testIsFree2() {
         System.out.println("isFree");
-        Coordinates pos = new Coordinates(4,4);
+        Coordinates pos = new Coordinates(4, 4);
         Reserve instance = new Reserve();
-        Animal animal = new Animal (Species.LION, Color.GREEN);
+        Animal animal = new Animal(Species.LION, Color.GREEN);
         instance.putAnimal(animal, pos);
         boolean expResult = false;
         boolean result = instance.isFree(pos);
@@ -63,25 +45,25 @@ public class ReserveTest {
     /**
      * Test of putAnimal method, of class Reserve.
      */
-    @Test
+    @Test (expected=IllegalArgumentException.class)
     public void testPutAnimal1() {
         System.out.println("putAnimal");
-        Animal animal = new Animal (Species.ELEPHANT, Color.RED);
-        Coordinates pos = new Coordinates(3,1);
-        Animal animal2 = new Animal (Species.LION, Color.GREEN);
+        Animal animal = new Animal(Species.ELEPHANT, Color.RED);
+        Coordinates pos = new Coordinates(3, 1);
+        Animal animal2 = new Animal(Species.LION, Color.GREEN);
         Reserve instance = new Reserve();
         instance.putAnimal(animal2, pos);
         instance.putAnimal(animal, pos);
     }
-    
+
     /**
      * Test of putAnimal method, of class Reserve.
      */
     @Test
     public void testPutAnimal2() {
         System.out.println("putAnimal");
-        Animal animal = new Animal (Species.ELEPHANT, Color.RED);
-        Coordinates pos = new Coordinates(3,1);
+        Animal animal = new Animal(Species.ELEPHANT, Color.RED);
+        Coordinates pos = new Coordinates(3, 1);
         Reserve instance = new Reserve();
         instance.putAnimal(animal, pos);
     }
@@ -92,7 +74,7 @@ public class ReserveTest {
     @Test
     public void testGetAnimal1() {
         System.out.println("getAnimal");
-        Coordinates pos = new Coordinates(0,2);
+        Coordinates pos = new Coordinates(0, 2);
         Reserve instance = new Reserve();
         Animal expResult = null;
         Animal result = instance.getAnimal(pos);
@@ -105,7 +87,7 @@ public class ReserveTest {
     @Test
     public void testGetAnimal2() {
         System.out.println("getAnimal");
-        Coordinates pos = new Coordinates(0,2);
+        Coordinates pos = new Coordinates(0, 2);
         Reserve instance = new Reserve();
         Animal animal = new Animal(Species.ZEBRA, Color.RED);
         instance.putAnimal(animal, pos);
@@ -113,5 +95,5 @@ public class ReserveTest {
         Animal result = instance.getAnimal(pos);
         assertEquals(expResult, result);
     }
-    
+
 }
