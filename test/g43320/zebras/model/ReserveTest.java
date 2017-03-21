@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Initialize the tests for the methods of the class Reserve.
  * @author s_u_y_s_a
  */
 public class ReserveTest {
@@ -74,6 +74,9 @@ public class ReserveTest {
         instance.putAnimal(animal, pos);
     }
     
+    /**
+     * Test of putAnimal method, of class Reserve.
+     */
     @Test
     public void testPutAnimal2() {
         System.out.println("putAnimal");

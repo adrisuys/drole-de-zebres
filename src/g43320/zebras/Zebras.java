@@ -14,7 +14,7 @@ import g43320.zebras.model.Species;
 public class Zebras {
 
     /**
-     * 
+     * Initialize a reserve, put a red gazelle on the position (2,4) and print the result.
      * @param args 
      */
     public static void main(String[] args) {
