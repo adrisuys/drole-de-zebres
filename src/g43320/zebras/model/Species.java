@@ -24,7 +24,7 @@ public enum Species {
      */
     ELEPHANT,
     /**
-     * animals that are crocodile.
+     * animals that are crocodiles.
      */
     CROCODILE;
 
