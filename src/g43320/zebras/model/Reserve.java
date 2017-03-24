@@ -88,7 +88,7 @@ public class Reserve {
                 if (animal1 == null) {
                     aString = aString + " || " + "CASE  LIBRE";
                 } else {
-                    aString = aString + " || " + animal1;
+                    aString = aString + " || " + "  " + animal1 + "  " ;
                 }  
             }
             aString = aString + "\n" + "-------------------------------------------------------------------------------------------" + "\n";

@@ -1,5 +1,7 @@
 package g43320.zebras.model;
 
+import static g43320.zebras.model.Color.RED;
+
 /**
  * An animal is a part of a game, it has its own color and its own species.
  *
@@ -53,10 +55,15 @@ public class Animal {
     @Override
     public String toString() {
         String animal;
-        String color;
+//        String color;
         animal = getSpecies().name();
-        color = getColor().name();
-        return animal + " " + color;
+//        color = getColor().name();
+//        return animal + " " + color;
+        if (getColor()==RED) {
+            return "\u001B[31m" + animal + "\u001B[0m";
+        } else {
+            return "\u001B[32m" + animal + "\u001B[0m";
+        }
     }
 
 }
