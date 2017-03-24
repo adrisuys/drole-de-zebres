@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * The reserve represent the board on which the game takes place.
+ *
  * @author s_u_y_s_a
  */
 public class Reserve {
@@ -17,6 +18,15 @@ public class Reserve {
      */
     public Reserve() {
         this.animals = new Animal[this.LG][this.COL];
+    }
+
+    /**
+     * Get the array set as an attribute.
+     *
+     * @return the array set as an attribute.
+     */
+    public Animal[][] getAnimals() {
+        return animals;
     }
 
     /**
@@ -71,7 +81,19 @@ public class Reserve {
      */
     @Override
     public String toString() {
-        return Arrays.deepToString(animals);
+//        return Arrays.deepToString(animals);
+        String aString = "";
+        for (Animal[] animal : getAnimals()) {
+            for (Animal animal1 : animal) {
+                if (animal1 == null) {
+                    aString = aString + " || " + "CASE  LIBRE";
+                } else {
+                    aString = aString + " || " + animal1;
+                }  
+            }
+            aString = aString + "\n" + "-------------------------------------------------------------------------------------------" + "\n";
+        }
+        return aString;
     }
 
 }
