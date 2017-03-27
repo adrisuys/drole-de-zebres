@@ -10,8 +10,8 @@ import java.util.Arrays;
 public class Reserve {
 
     private final Animal[][] animals;
-    final int COL = 6;
-    final int LG = 5;
+    final static int COL = 6;
+    final static int LG = 5;
 
     /**
      * Creates a reserve, which is a 2D array of 5x6 of Animals.
@@ -94,6 +94,22 @@ public class Reserve {
             aString = aString + "\n" + "-------------------------------------------------------------------------------------------" + "\n";
         }
         return aString;
+    }
+    
+    public boolean isFullColumn (int column) {
+        int i = 0;
+        while (i<this.getAnimals()[column].length && this.getAnimals()[i][column]!=null) {
+            i++;
+        }
+        return i == this.getAnimals()[column].length;
+    }
+    
+    public boolean isFullRow (int row) {
+        int i = 0;
+        while (i<this.getAnimals().length && this.getAnimals()[row][i]!=null) {
+            i++;
+        }
+        return i == this.getAnimals().length;
     }
 
 }
