@@ -1,7 +1,5 @@
 package g43320.zebras.model;
 
-import java.util.Arrays;
-
 /**
  * The reserve represent the board on which the game takes place.
  *

@@ -9,6 +9,7 @@ package g43320.zebras.model;
 public class ImpalaJones {
 
     private int position;
+    private final static int POSITIONMAX = 21;
 
     /**
      * Creates the piece "Impala Jones", his position is represented by a number
@@ -28,13 +29,28 @@ public class ImpalaJones {
     }
 
     /**
+     * Put Impala Jones on his initial position.
+     *
+     * @param nb
+     */
+    public void init(int nb) {
+        if (nb>21) {
+            throw new IllegalArgumentException ("Position not valid");
+        }
+        position = nb;
+    }
+
+    /**
      * Move Impala Jones on his path.
      *
      * @param distance the number of step Impala Jones has to make around the
      * reserve
      */
     public void move(int distance) {
-        position = position + distance;
+        position = (position + distance);
+        if (position>21) {
+            position = (position % POSITIONMAX)-1;
+        }
     }
 
     /**
@@ -43,7 +59,7 @@ public class ImpalaJones {
      * @return true if he is on the upper side of the reserve, false otherwise.
      */
     public boolean isUp() {
-        return (position >= 0 && position < 6);
+        return (position >= 0 && position < Reserve.COL);
     }
 
     /**
@@ -52,7 +68,7 @@ public class ImpalaJones {
      * @return true if he is on the down side of the reserve, false otherwise.
      */
     public boolean isDown() {
-        return (position >= 11 && position < 17);
+        return (position >= Reserve.COL+Reserve.LG && position < Reserve.COL+Reserve.COL+Reserve.LG);
     }
 
     /**
@@ -61,7 +77,7 @@ public class ImpalaJones {
      * @return true if he is on the left side of the reserve, false otherwise.
      */
     public boolean isLeft() {
-        return (position >= 17 && position < 22);
+        return (position >= Reserve.COL+Reserve.COL+Reserve.LG && position < Reserve.COL+Reserve.COL+Reserve.LG+Reserve.LG);
     }
 
     /**
@@ -70,7 +86,7 @@ public class ImpalaJones {
      * @return true if he is on the right side of the reserve, false otherwise.
      */
     public boolean isRight() {
-        return (position >= 6 && position < 11);
+        return (position >= Reserve.COL && position < Reserve.COL+Reserve.LG);
     }
 
     /**
@@ -159,8 +175,8 @@ public class ImpalaJones {
         position = position + distance;
         boolean moveChecked;
         int row = getRow();
+        int column = getColumn();
         if (row == -1) {
-            int column = getColumn();
             moveChecked = !reserve.isFullColumn(column);
         } else {
             moveChecked = !reserve.isFullRow(row);
@@ -181,16 +197,16 @@ public class ImpalaJones {
         int tailleCol = Reserve.LG;
         boolean positionOkay = false;
         if (isUp()) {
-            positionOkay = position == pos.getColumn();
+            positionOkay = (position == pos.getColumn());
         }
         if (isRight()) {
-            positionOkay = position % 6 == pos.getRow();
+            positionOkay = (position % Reserve.COL == pos.getRow());
         }
         if (isDown()) {
-            positionOkay = pos.getColumn() == Math.abs(position - (tailleLn + tailleCol + tailleLn - 1));
+            positionOkay = (pos.getColumn() == Math.abs(position - (tailleLn + tailleCol + tailleLn - 1)));
         }
-        if (isUp()) {
-            positionOkay = pos.getRow() == Math.abs(position - (tailleLn + tailleCol + tailleLn + tailleCol - 1));
+        if (isLeft()) {
+            positionOkay = (pos.getRow() == Math.abs(position - (tailleLn + tailleCol + tailleLn + tailleCol - 1)));
         }
         return positionOkay;
     }
