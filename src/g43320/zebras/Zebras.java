@@ -4,6 +4,7 @@ import g43320.zebras.model.Animal;
 import g43320.zebras.model.Color;
 import static g43320.zebras.model.Color.RED;
 import g43320.zebras.model.Coordinates;
+import g43320.zebras.model.ImpalaJones;
 import g43320.zebras.model.Pieces;
 import g43320.zebras.model.Reserve;
 import g43320.zebras.model.Species;
@@ -31,8 +32,21 @@ public class Zebras {
         Coordinates pos2 = new Coordinates(1, 3);
         Animal animal2 = stock.getAnimal(Color.RED, Species.CROCODILE);
         reserve.putAnimal(animal2, pos2);
+        //System.out.println(reserve.toString());
+        
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.GREEN), new Coordinates(0,2));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.GREEN), new Coordinates(1,2));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.GREEN), new Coordinates(2,2));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.GREEN), new Coordinates(3,2));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.GREEN), new Coordinates(4,2));
+        
         System.out.println(reserve.toString());
         
+        System.out.println(reserve.isFullColumn(2));
+        
+        ImpalaJones ij = new ImpalaJones();
+        ij.init(0);
+        System.out.println(ij.checkMove(reserve, 2));
         
         
     }

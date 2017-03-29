@@ -414,7 +414,6 @@ public class ImpalaJonesTest {
         int distance = 16;
         ImpalaJones instance = new ImpalaJones();
         instance.init(0);
-        instance.move(distance);
         boolean expResult = false;
         boolean result = instance.checkMove(reserve, distance);
         assertEquals(expResult, result);
@@ -435,7 +434,6 @@ public class ImpalaJonesTest {
         int distance = 14;
         ImpalaJones instance = new ImpalaJones();
         instance.init(0);
-        instance.move(distance);
         boolean expResult = true;
         boolean result = instance.checkMove(reserve, distance);
         assertEquals(expResult, result);
@@ -508,14 +506,14 @@ public class ImpalaJonesTest {
     public void testFindFirst1() {
         System.out.println("findFirst");
         Reserve reserve = new Reserve();
-        reserve.putAnimal(new Animal(Species.LION,Color.RED), new Coordinates(0,0));
-        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(1,0));
-        reserve.putAnimal(new Animal(Species.ELEPHANT,Color.RED), new Coordinates(2,0));
-        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(3,0));
-        reserve.putAnimal(new Animal(Species.GAZELLE,Color.RED), new Coordinates(4,0));
+        reserve.putAnimal(new Animal(Species.LION,Color.RED), new Coordinates(0,1));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(1,1));
+        reserve.putAnimal(new Animal(Species.ELEPHANT,Color.RED), new Coordinates(2,1));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(3,1));
+        reserve.putAnimal(new Animal(Species.GAZELLE,Color.RED), new Coordinates(4,1));
         ImpalaJones instance = new ImpalaJones();
         instance.init(0);
-        int expResult = 1;
+        int expResult = 2;
         int result = instance.findFirst(reserve);
         assertEquals(expResult, result);
     }
@@ -529,7 +527,7 @@ public class ImpalaJonesTest {
         Reserve reserve = new Reserve();
         ImpalaJones instance = new ImpalaJones();
         instance.init(0);
-        int expResult = 0;
+        int expResult = 1;
         int result = instance.findFirst(reserve);
         assertEquals(expResult, result);
     }

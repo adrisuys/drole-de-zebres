@@ -181,6 +181,7 @@ public class ImpalaJones {
         } else {
             moveChecked = !reserve.isFullRow(row);
         }
+        //position = position - distance;
         return moveChecked;
     }
 
@@ -221,7 +222,7 @@ public class ImpalaJones {
      */
     public int findFirst(Reserve reserve) {
         int distance = 1;
-        int cptPas = 0;
+        int cptPas = 1;
         while (!checkMove(reserve, distance)) {
             move(distance);
             cptPas++;

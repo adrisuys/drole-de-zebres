@@ -10,6 +10,10 @@ public class Player {
 
     private final Color color;
 
+    /**
+     * Creates a player by giving it a color (green or red).
+     * @param color 
+     */
     public Player(Color color) {
         this.color = color;
     }

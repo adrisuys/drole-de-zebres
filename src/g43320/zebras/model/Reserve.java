@@ -96,18 +96,18 @@ public class Reserve {
     
     public boolean isFullColumn (int column) {
         int i = 0;
-        while (i<this.getAnimals()[column].length && this.getAnimals()[i][column]!=null) {
+        while (i<LG && this.getAnimals()[i][column]!=null) {
             i++;
         }
-        return i == this.getAnimals()[column].length;
+        return i == LG;
     }
     
     public boolean isFullRow (int row) {
         int i = 0;
-        while (i<this.getAnimals().length && this.getAnimals()[row][i]!=null) {
+        while (i<COL && this.getAnimals()[row][i]!=null) {
             i++;
         }
-        return i == this.getAnimals().length;
+        return i == COL;
     }
 
 }
