@@ -15,11 +15,12 @@ import java.util.List;
  */
 public class Game implements Model {
     
-    private List<Player> players;
+    private final List<Player> players;
     private Reserve reserve;
     private ImpalaJones impala;
     private Pieces pieces;
     private GameStatus status;
+    private Player currentPlayer;
 
     public Game() {
         players = new ArrayList<>();
@@ -31,68 +32,110 @@ public class Game implements Model {
         reserve = new Reserve();
         
         impala = new ImpalaJones();
+        
+        pieces = new Pieces();
+        
+        status = GameStatus.INIT;
+        
+        int random = (int) ((Math.random()*2));
+        currentPlayer = players.get(random);
+        
     }
-    
-    
+
+    public ImpalaJones getImpala() {
+        return impala;
+    }
+
+    public Pieces getPieces() {
+        return pieces;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
     
     @Override
     public void start() {
-        
+        Game game = new Game();
     }
 
     @Override
     public void setImpalaJonesFirstPosition(int position) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (status!=GameStatus.INIT) {
+            throw new GameException("It is time for the game to be initialize");
+        }
+        getImpalaJones().init(position);
     }
 
     @Override
     public void putAnimal(Coordinates position, Species species) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (status!=GameStatus.ANIMAL) {
+            throw new GameException("It is time for the animals to be put on the board");
+        }
+        Color color = getCurrentPlayer().getColor();
+        Animal animal = getPieces().getAnimal(color, species);
+        getReserve().putAnimal(animal, position);
     }
 
     @Override
     public void moveImpalaJones(int distance) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (status!=GameStatus.IMPALA) {
+            throw new GameException("It is time for Impala Jones to be moved");
+        }
+        if (distance>3) {
+            throw new GameException("The distance must not be greater than 3");
+        }
+        if (!getImpalaJones().checkMove(reserve, distance)) {
+            throw new GameException("The column or row indicated by Impala Jones is already full");
+        }
+        getImpalaJones().move(distance);
+        
     }
 
     @Override
     public boolean isOver() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int i = 0;
+        while (i<Reserve.LG && reserve.isFullRow(i)) {
+            i++;
+        }
+        return i==Reserve.LG;
     }
 
     @Override
     public GameStatus getStatus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return status;
     }
 
     @Override
     public Color getCurrentColor() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return getCurrentPlayer().getColor();
     }
 
     @Override
     public List<Player> getPlayers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return players;
     }
 
     @Override
     public Reserve getReserve() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return reserve;
     }
 
     @Override
     public int getNb(Species species) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Color color = getCurrentPlayer().getColor();
+        int nbAnimals = getPieces().getNbAnimals(color, species);
+        return nbAnimals;
     }
 
     @Override
     public ImpalaJones getImpalaJones() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return impala;
     }
 
     @Override
     public int getScore(Color color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0;     
     }
 
 }

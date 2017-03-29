@@ -2,13 +2,17 @@ package g43320.zebras;
 
 import g43320.zebras.model.Animal;
 import g43320.zebras.model.Color;
+import static g43320.zebras.model.Color.GREEN;
 import static g43320.zebras.model.Color.RED;
 import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.ImpalaJones;
 import g43320.zebras.model.Pieces;
 import g43320.zebras.model.Reserve;
 import g43320.zebras.model.Species;
+import static g43320.zebras.model.Species.GAZELLE;
 import static g43320.zebras.model.Species.LION;
+import static g43320.zebras.model.Species.ZEBRA;
+import g43320.zebras.view.Display;
 
 /**
  * Zebras is the main Class controlling the whole game.
@@ -39,6 +43,8 @@ public class Zebras {
         reserve.putAnimal(new Animal(Species.ZEBRA,Color.GREEN), new Coordinates(2,2));
         reserve.putAnimal(new Animal(Species.ZEBRA,Color.GREEN), new Coordinates(3,2));
         reserve.putAnimal(new Animal(Species.ZEBRA,Color.GREEN), new Coordinates(4,2));
+        reserve.putAnimal(new Animal(Species.LION,Color.RED), new Coordinates(0,0));
+        reserve.putAnimal(new Animal(Species.ELEPHANT,Color.RED), new Coordinates(4,5));
         
         System.out.println(reserve.toString());
         
@@ -47,6 +53,8 @@ public class Zebras {
         ImpalaJones ij = new ImpalaJones();
         ij.init(0);
         System.out.println(ij.checkMove(reserve, 2));
+        
+        Display.displayReserve(reserve,ij);
         
         
     }

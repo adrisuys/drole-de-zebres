@@ -79,14 +79,13 @@ public class Reserve {
      */
     @Override
     public String toString() {
-//        return Arrays.deepToString(animals);
         String aString = "";
         for (Animal[] animal : getAnimals()) {
             for (Animal animal1 : animal) {
                 if (animal1 == null) {
-                    aString = aString + " || " + "CASE  LIBRE";
+                    aString = aString + " || " + "CASE  LIBRE  ";
                 } else {
-                    aString = aString + " || " + "  " + animal1 + "  " ;
+                    aString = aString + " || " + "  " + animal1 + " " ;
                 }  
             }
             aString = aString + "\n" + "-------------------------------------------------------------------------------------------" + "\n";
@@ -94,6 +93,11 @@ public class Reserve {
         return aString;
     }
     
+    /**
+     * Check if a column is full, if all its case are occupied by animals.
+     * @param column a column of the reserve.
+     * @return true if it is full, false otherwise.
+     */
     public boolean isFullColumn (int column) {
         int i = 0;
         while (i<LG && this.getAnimals()[i][column]!=null) {
@@ -102,6 +106,11 @@ public class Reserve {
         return i == LG;
     }
     
+    /**
+     * Check if a row is full, if all its case are occupied by animals.
+     * @param row a column of the reserve.
+     * @return true if it is full, false otherwise.
+     */
     public boolean isFullRow (int row) {
         int i = 0;
         while (i<COL && this.getAnimals()[row][i]!=null) {

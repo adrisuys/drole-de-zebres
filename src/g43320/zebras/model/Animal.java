@@ -1,6 +1,7 @@
 package g43320.zebras.model;
 
 import static g43320.zebras.model.Color.RED;
+import java.util.Objects;
 
 /**
  * An animal is a part of a game, it has its own color and its own species.
@@ -55,15 +56,52 @@ public class Animal {
     @Override
     public String toString() {
         String animal;
-//        String color;
-        animal = getSpecies().name();
-//        color = getColor().name();
-//        return animal + " " + color;
+        animal = getSpecies().name().substring(0, 1);
         if (getColor()==RED) {
             return "\u001B[31m" + animal + "\u001B[0m";
         } else {
             return "\u001B[32m" + animal + "\u001B[0m";
         }
     }
+
+    /**
+     * Returns the hash code of a non-null argument and 0 for a null argument.
+     * @return the hash code of a non-null argument and 0 for a null argument.
+     */
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 73 * hash + Objects.hashCode(this.species);
+        hash = 73 * hash + Objects.hashCode(this.color);
+        return hash;
+    }
+
+    /**
+     * Returns true if a Animal is equal to the argument and false otherwise.
+     * @param obj any object to be compared to the list.
+     * @return true if a Animal is equal to the arguments and false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Animal other = (Animal) obj;
+        if (this.species != other.species) {
+            return false;
+        }
+        if (this.color != other.color) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

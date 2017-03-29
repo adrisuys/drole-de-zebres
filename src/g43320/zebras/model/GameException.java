@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package g43320.zebras.model;
 
 /**
  *
  * @author s_u_y_s_a
  */
-public class GameException extends Exception {
+public class GameException extends RuntimeException {
 
     /**
      * Creates a new instance of <code>GameException</code> without detail
