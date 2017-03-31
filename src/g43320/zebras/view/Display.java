@@ -5,6 +5,7 @@ import g43320.zebras.model.Color;
 import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.ImpalaJones;
 import g43320.zebras.model.Pieces;
+import g43320.zebras.model.Player;
 import g43320.zebras.model.Reserve;
 import g43320.zebras.model.Species;
 import java.util.Scanner;
@@ -69,7 +70,7 @@ public class Display {
         //ligne 9
         String [] impalaDown = new String [] {".",".",".",".",".","."};
         if (impala.isDown()) {
-            impalaUp[impala.getPosition()]="I";
+            impalaDown[impala.getColumn()]="I";
         }
         aString = aString + "     ";
         for (String s : impalaDown) {
@@ -89,30 +90,18 @@ public class Display {
         return distance;
     }
     
-    public static Animal chooseAnimalFromStock () {
-        Color color;
+    public static Animal chooseAnimalFromStock (Color color) {
         Species species;
         Animal animal;
         Scanner clavier = new  Scanner(System.in);
-        System.out.println("Choose a color between 'RED' or 'GREEN'");
-        String colorUser = clavier.next();
-        while (!colorUser.equals("RED") || !colorUser.equals("GREEN")) {
-            System.out.println("Choose a color between 'RED' or 'GREEN'");
-            colorUser = clavier.next();
-        }
-        if (colorUser.equals("RED")) {
-            color = Color.RED;
-        } else {
-            color = Color.GREEN;
-        }
         
         System.out.println("Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE AND CROCODILE");
         String speciesUser = clavier.next();
         while (!speciesUser.equals("ZEBRA") || !speciesUser.equals("GAZELLE") || !speciesUser.equals("ELEPHANT") || !speciesUser.equals("CROCODILE") || !speciesUser.equals("LION")) {
             System.out.println("Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE AND CROCODILE");
-            colorUser = clavier.next();
+            speciesUser = clavier.next();
         }
-        switch (colorUser) {
+        switch (speciesUser) {
             case "GAZELLE" : species = Species.GAZELLE; break;
             case "ZEBRA" : species = Species.ZEBRA; break;
             case "ELEPHANT" : species = Species.ELEPHANT; break;

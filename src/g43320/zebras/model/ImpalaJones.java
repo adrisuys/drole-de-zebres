@@ -51,6 +51,7 @@ public class ImpalaJones {
         if (position>21) {
             position = (position % POSITIONMAX)-1;
         }
+        
     }
 
     /**
@@ -181,7 +182,7 @@ public class ImpalaJones {
         } else {
             moveChecked = !reserve.isFullRow(row);
         }
-        //position = position - distance;
+        position = position - distance;
         return moveChecked;
     }
 
