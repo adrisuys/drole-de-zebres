@@ -51,8 +51,11 @@ public class Zebras {
         
         ImpalaJones ij = new ImpalaJones();
         ij.init(0);
-        if (ij.checkMove(reserve, 20)) {
-            ij.move(20);
+        int distance = 2;
+        if (ij.checkMove(reserve, distance)) {
+            ij.move(distance);
+        } else {
+            System.out.println("yo");
         }
         
         Display.displayReserve(reserve,ij);

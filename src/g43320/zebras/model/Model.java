@@ -20,7 +20,7 @@ public interface Model {
      * @param position of Impala Jones at the beginning of game
      * @throws GameException if game's status isn't GameStatus.INIT.
      */
-    void setImpalaJonesFirstPosition(int position);
+    void setImpalaJonesFirstPosition(int position) throws GameException;
 
     /**
      * Put an animal in the Board. Put an animal of the given species for the
@@ -37,7 +37,7 @@ public interface Model {
      * play anymore</li>
      * </ul>
      */
-    void putAnimal(Coordinates position, Species species);
+    void putAnimal(Coordinates position, Species species) throws GameException;
 
     /**
      * Move Impala Jones some steps forward.
@@ -50,7 +50,7 @@ public interface Model {
      * <li>or the distance is too large</li>
      * </ul>
      */
-    void moveImpalaJones(int distance);
+    void moveImpalaJones(int distance) throws GameException;
 
     /**
      * Return true if the game is over.
@@ -111,4 +111,10 @@ public interface Model {
      * @return the score of the player of the given color.
      */
     int getScore(Color color);
+    
+    ImpalaJones getImpala();
+    
+    Pieces getPieces();
+    
+    Player getCurrentPlayer();
 }

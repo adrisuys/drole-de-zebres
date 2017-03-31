@@ -47,9 +47,11 @@ public class ImpalaJones {
      * reserve
      */
     public void move(int distance) {
-        position = (position + distance);
-        if (position>21) {
+        
+        if (position + distance > 21) {
             position = (position % POSITIONMAX)-1;
+        } else {
+            position = position + distance;
         }
         
     }

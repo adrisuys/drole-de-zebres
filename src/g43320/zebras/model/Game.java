@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is the main class of the model, it organises the game itself.
+ * This is the main class of the model, it organizes the game itself.
  *
  * @author s_u_y_s_a
  */
@@ -42,25 +42,28 @@ public class Game implements Model {
         
     }
 
+    @Override
     public ImpalaJones getImpala() {
         return impala;
     }
 
+    @Override
     public Pieces getPieces() {
         return pieces;
     }
 
+    @Override
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
     
     @Override
     public void start() {
-        Game game = new Game();
+        
     }
 
     @Override
-    public void setImpalaJonesFirstPosition(int position) {
+    public void setImpalaJonesFirstPosition(int position) throws GameException {
         if (status!=GameStatus.INIT) {
             throw new GameException("It is time for the game to be initialize");
         }
@@ -68,7 +71,7 @@ public class Game implements Model {
     }
 
     @Override
-    public void putAnimal(Coordinates position, Species species) {
+    public void putAnimal(Coordinates position, Species species) throws GameException {
         if (status!=GameStatus.ANIMAL) {
             throw new GameException("It is time for the animals to be put on the board");
         }
@@ -78,7 +81,7 @@ public class Game implements Model {
     }
 
     @Override
-    public void moveImpalaJones(int distance) {
+    public void moveImpalaJones(int distance) throws GameException {
         if (status!=GameStatus.IMPALA) {
             throw new GameException("It is time for Impala Jones to be moved");
         }
