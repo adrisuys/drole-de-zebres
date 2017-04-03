@@ -18,12 +18,24 @@ import java.util.Scanner;
 public class Display {
 
     public static void displayStock(Pieces pieces, Color color) {
-        System.out.println("-----STOCK-----");
-        System.out.println("GAZELLES     " + pieces.getNbAnimals(color, Species.GAZELLE));
-        System.out.println("ZEBRAS       " + pieces.getNbAnimals(color, Species.ZEBRA));
-        System.out.println("ELEPHANT     " + pieces.getNbAnimals(color, Species.ELEPHANT));
-        System.out.println("LION         " + pieces.getNbAnimals(color, Species.LION));
-        System.out.println("CROCODILES   " + pieces.getNbAnimals(color, Species.CROCODILE));
+        String aString; 
+        if (color == Color.RED) {
+            aString = "\u001B[31m" + "-----STOCK-----" + "\n" + "\u001B[0m";
+            aString = aString + "\u001B[31m" + "GAZELLES     " + pieces.getNbAnimals(color, Species.GAZELLE) + "\n" + "\u001B[0m";
+            aString = aString + "\u001B[31m" + "ZEBRAS       " + pieces.getNbAnimals(color, Species.ZEBRA) + "\n"+ "\u001B[0m";
+            aString = aString + "\u001B[31m" + "ELEPHANT     " + pieces.getNbAnimals(color, Species.ELEPHANT) + "\n"+ "\u001B[0m";
+            aString = aString + "\u001B[31m" + "LION         " + pieces.getNbAnimals(color, Species.LION) + "\n"+ "\u001B[0m";
+            aString = aString + "\u001B[31m" + "CROCODILES   " + pieces.getNbAnimals(color, Species.CROCODILE) + "\u001B[0m";
+        } else {
+            aString = "\u001B[32m" + "-----STOCK-----" + "\n"+ "\u001B[0m";
+            aString = aString + "\u001B[32m" +"GAZELLES     " + pieces.getNbAnimals(color, Species.GAZELLE) + "\n"+ "\u001B[0m";
+            aString = aString + "\u001B[32m" +"ZEBRAS       " + pieces.getNbAnimals(color, Species.ZEBRA) + "\n"+ "\u001B[0m";
+            aString = aString + "\u001B[32m" +"ELEPHANT     " + pieces.getNbAnimals(color, Species.ELEPHANT) + "\n"+ "\u001B[0m";
+            aString = aString + "\u001B[32m" +"LION         " + pieces.getNbAnimals(color, Species.LION) + "\n"+ "\u001B[0m";
+            aString = aString + "\u001B[32m" +"CROCODILES   " + pieces.getNbAnimals(color, Species.CROCODILE) + "\u001B[0m";
+        }
+        System.out.println(aString);
+
     }
 
     public static String displayReserveHead(ImpalaJones impala) {
@@ -51,11 +63,11 @@ public class Display {
             } else {
                 aString = aString + ". | ";
             }
-            for (int i = 0; i < reserve.getAnimals()[j].length; i++) {
-                if (reserve.getAnimals()[j][i] == null) {
+            for (Animal animal : reserve.getAnimals()[j]) {
+                if (animal == null) {
                     aString = aString + "." + " ";
                 } else {
-                    aString = aString + reserve.getAnimals()[j][i] + " ";
+                    aString = aString + animal + " ";
                 }
             }
             if (impala.getPosition() == 6 + j) {
@@ -108,10 +120,10 @@ public class Display {
         return distance;
     }
 
-    public static Animal chooseAnimalFromStock(Color color) {
+    public static Species chooseAnimalFromStock() {
         Species species = null;
         Scanner clavier = new Scanner(System.in);
-
+        System.out.println("It is time to choose an animal to be placed");
         do {
             System.out.println("Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE AND CROCODILE");
             String speciesUser = clavier.next();
@@ -136,7 +148,7 @@ public class Display {
             }
         } while (species == null);
 
-        return new Animal(species, color);
+        return species;
 
     }
 
@@ -144,15 +156,15 @@ public class Display {
         int row;
         int column;
         Scanner clavier = new Scanner(System.in);
+        System.out.println("It is time to choose a coordinates for an animal");
         Coordinates position = null;
         boolean invalid = true;
         while (invalid) {
             invalid = false;
             System.out.println("Choose a row");
-            row = clavier.nextInt();
+            row = clavier.nextInt()-1;
             System.out.println("Choose a column");
-            column = clavier.nextInt();
-            position = new Coordinates(row, column);
+            column = clavier.nextInt()-1;
             try {
                 position = new Coordinates(row, column);
             } catch (Exception e) {
@@ -160,5 +172,21 @@ public class Display {
             }
         }
         return position;
+    }
+
+    public static int initImpala() {
+        Scanner clavier = new Scanner(System.in);
+        int position;
+        do{
+            System.out.println("Put Impala Jones to its first position. Give a position between 0 and 21");
+            position = clavier.nextInt();
+        } while (position < 0 && position > 21);
+        
+        return position;
+    }
+    
+    public static void displayPlayer (Player currentPlayer) {
+        System.out.println("It is time for "+currentPlayer+" to play");
+       
     }
 }

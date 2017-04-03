@@ -112,9 +112,9 @@ public interface Model {
      */
     int getScore(Color color);
     
-    ImpalaJones getImpala();
-    
     Pieces getPieces();
     
     Player getCurrentPlayer();
+    
+    void changePlayer();
 }

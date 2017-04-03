@@ -43,11 +43,6 @@ public class Game implements Model {
     }
 
     @Override
-    public ImpalaJones getImpala() {
-        return impala;
-    }
-
-    @Override
     public Pieces getPieces() {
         return pieces;
     }
@@ -68,6 +63,8 @@ public class Game implements Model {
             throw new GameException("It is time for the game to be initialize");
         }
         getImpalaJones().init(position);
+        changePlayer();
+        status = GameStatus.ANIMAL;
     }
 
     @Override
@@ -75,9 +72,19 @@ public class Game implements Model {
         if (status!=GameStatus.ANIMAL) {
             throw new GameException("It is time for the animals to be put on the board");
         }
+        if(impala.getRow()!=position.getRow() && impala.getColumn()!=position.getColumn()) {
+            throw new GameException("This is not a coordinate that fits with Impala Jones's position");
+        }
+        if(!reserve.isFree(position)) {
+            throw new GameException("There is already an animal on this position");
+        }
+        if(getNb(species)==0) {
+            throw new GameException("You don't have that piece anymore");
+        }
         Color color = getCurrentPlayer().getColor();
         Animal animal = getPieces().getAnimal(color, species);
         getReserve().putAnimal(animal, position);
+        status = GameStatus.IMPALA;
     }
 
     @Override
@@ -92,6 +99,8 @@ public class Game implements Model {
             throw new GameException("The column or row indicated by Impala Jones is already full");
         }
         getImpalaJones().move(distance);
+        changePlayer();
+        status = GameStatus.ANIMAL;
         
     }
 
@@ -139,6 +148,16 @@ public class Game implements Model {
     @Override
     public int getScore(Color color) {
         return 0;     
+    }
+    
+    @Override
+    public void changePlayer() {
+        if (currentPlayer.equals(players.get(0))){
+            currentPlayer = players.get(1);
+        } else {
+            currentPlayer = players.get(0);
+        }
+        
     }
 
 }

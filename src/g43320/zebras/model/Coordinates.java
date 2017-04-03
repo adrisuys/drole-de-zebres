@@ -18,7 +18,7 @@ public class Coordinates {
             throw new IllegalArgumentException("The row must be included between 0 and 4");
         }
         if (column < 0 && column > Reserve.COL-1) {
-            throw new IllegalArgumentException("The column must be included between 0 and 4");
+            throw new IllegalArgumentException("The column must be included between 0 and 5");
         }
         this.row = row;
         this.column = column;
