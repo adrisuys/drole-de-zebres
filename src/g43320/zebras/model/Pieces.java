@@ -36,22 +36,22 @@ public class Pieces {
     }
 
     /**
-     * Add 6 gazelles in the stock of animals.
+     * Add 6 gazelles of each color in the stock of animals.
      */
     private void addGazelle() {
-        final int nbGazelle = 6;
+        final int NB_GAZELLE = 6;
         Animal gazelleGre = new Animal(Species.GAZELLE, Color.GREEN);
         Animal gazelleRed = new Animal(Species.GAZELLE, Color.RED);
-        for (int i = 0; i < nbGazelle; i++) {
+        for (int i = 0; i < NB_GAZELLE; i++) {
             getAnimals().add(i, gazelleGre);
         }
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < NB_GAZELLE; i++) {
             getAnimals().add(i, gazelleRed);
         }
     }
 
     /**
-     * Add 1 lion in the stock of animals.
+     * Add 1 lion of each color in the stock of animals.
      */
     private void addLion() {
         Animal lionGre = new Animal(Species.LION, Color.GREEN);
@@ -61,7 +61,7 @@ public class Pieces {
     }
 
     /**
-     * Add 1 elephant in the stock of animals.
+     * Add 1 elephant of each color in the stock of animals.
      */
     private void addElephant() {
         Animal elephantGre = new Animal(Species.ELEPHANT, Color.GREEN);
@@ -71,31 +71,31 @@ public class Pieces {
     }
 
     /**
-     * Add 5 zebras in the stock of animals.
+     * Add 5 zebras of each color in the stock of animals.
      */
     private void addZebra() {
-        final int nbZebra = 5;
+        final int NB_ZEBRA = 5;
         Animal zebraGre = new Animal(Species.ZEBRA, Color.GREEN);
         Animal zebraRed = new Animal(Species.ZEBRA, Color.RED);
-        for (int i = 0; i < nbZebra; i++) {
+        for (int i = 0; i < NB_ZEBRA; i++) {
             getAnimals().add(i, zebraGre);
         }
-        for (int i = 0; i < nbZebra; i++) {
+        for (int i = 0; i < NB_ZEBRA; i++) {
             getAnimals().add(i, zebraRed);
         }
     }
 
     /**
-     * Add 2 crocodiles in the stock of animals.
+     * Add 2 crocodiles of each color in the stock of animals.
      */
     private void addCrocodile() {
-        final int nbCrocodile = 2;
+        final int NB_CROCODILE = 2;
         Animal crocoGre = new Animal(Species.CROCODILE, Color.GREEN);
         Animal crocoRed = new Animal(Species.CROCODILE, Color.RED);
-        for (int i = 0; i < nbCrocodile; i++) {
+        for (int i = 0; i < NB_CROCODILE; i++) {
             getAnimals().add(i, crocoGre);
         }
-        for (int i = 0; i < nbCrocodile; i++) {
+        for (int i = 0; i < NB_CROCODILE; i++) {
             getAnimals().add(i, crocoRed);
         }
     }
@@ -165,8 +165,7 @@ public class Pieces {
     /**
      * Check if there is an animal (of the given color) left in the stock.
      * 
-     * @param color the color associated to the animals
-     * 
+     * @param color the color associated to the animals.
      * @return true if there is still an animal of the given color, false otherwise.
      */
     public boolean hasAvailable(Color color) {

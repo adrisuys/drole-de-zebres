@@ -1,6 +1,5 @@
 package g43320.zebras.model;
 
-;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -38,6 +37,19 @@ public class ImpalaJonesTest {
         instance.move(4);
         int pos = instance.getPosition();
         assertEquals(2,pos);
+    }
+    
+    /**
+     * Test of move method, of class ImpalaJones.
+     */
+    @Test
+    public void testMove3() {
+        System.out.println("move");
+        ImpalaJones instance = new ImpalaJones();
+        instance.init(21);
+        instance.move(1);
+        int pos = instance.getPosition();
+        assertEquals(0,pos);
     }
 
     /**

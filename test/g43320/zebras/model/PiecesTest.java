@@ -1,6 +1,5 @@
 package g43320.zebras.model;
 
-import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -9,6 +8,7 @@ import static org.junit.Assert.*;
  * @author s_u_y_s_a
  */
 public class PiecesTest {
+
     
     /**
      * Test of getAnimal method, of class Pieces.
@@ -43,7 +43,7 @@ public class PiecesTest {
      * Test of hasAvailable method, of class Pieces.
      */
     @Test
-    public void testHasAvailable() {
+    public void testHasAvailable_0args() {
         System.out.println("hasAvailable");
         Pieces instance = new Pieces();
         boolean expResult = true;
@@ -55,7 +55,7 @@ public class PiecesTest {
      * Test of hasAvailable method, of class Pieces.
      */
     @Test
-    public void testHasAvailable2() {
+    public void testHasAvailable2_0args() {
         System.out.println("hasAvailable");
         Pieces instance = new Pieces();
         instance.getAnimals().clear();
@@ -104,6 +104,49 @@ public class PiecesTest {
         instance.getAnimals().remove(new Animal(species,color));
         int expResult = 0;
         int result = instance.getNbAnimals(color, species);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of putBackAnimal method, of class Pieces.
+     */
+    @Test
+    public void testPutBackAnimal() {
+        System.out.println("putBackAnimal");
+        Animal animal = new Animal(Species.CROCODILE, Color.GREEN);
+        Pieces instance = new Pieces();
+        instance.getAnimal(Color.GREEN, Species.CROCODILE);
+        instance.putBackAnimal(animal);
+        int nbCrocodileGreenExpected = 2;
+        int nbCrocodileGreen = instance.getNbAnimals(Color.GREEN, Species.CROCODILE);
+        assertEquals(nbCrocodileGreenExpected,nbCrocodileGreen);
+    }
+
+    /**
+     * Test of hasAvailable method, of class Pieces.
+     */
+    @Test
+    public void testHasAvailable1_Color() {
+        System.out.println("hasAvailable");
+        Color color = Color.RED;
+        Pieces instance = new Pieces();
+        instance.getAnimals().clear();
+        instance.getAnimals().add(new Animal(Species.CROCODILE, Color.GREEN));
+        boolean expResult = false;
+        boolean result = instance.hasAvailable(color);
+        assertEquals(expResult, result);  
+    }
+    
+    /**
+     * Test of hasAvailable method, of class Pieces.
+     */
+    @Test
+    public void testHasAvailable2_Color() {
+        System.out.println("hasAvailable");
+        Color color = Color.RED;
+        Pieces instance = new Pieces();
+        boolean expResult = true;
+        boolean result = instance.hasAvailable(color);
         assertEquals(expResult, result);
     }
     

@@ -9,7 +9,7 @@ package g43320.zebras.model;
 public class ImpalaJones {
 
     private int position;
-    private final static int POSITIONMAX = 21;
+    private final static int POSITION_MAX = 21;
 
     /**
      * Creates the piece "Impala Jones", his position is represented by a number
@@ -49,7 +49,7 @@ public class ImpalaJones {
     public void move(int distance) {
 
         if (position + distance > 21) {
-            position = (position % POSITIONMAX) - 1;
+            position = ((position+distance) % POSITION_MAX) - 1;
         } else {
             position = position + distance;
         }

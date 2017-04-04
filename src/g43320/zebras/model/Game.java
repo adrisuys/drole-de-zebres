@@ -153,6 +153,9 @@ public class Game implements Model {
         }
         getImpalaJones().move(distance);
         changePlayer();
+        if (!getPieces().hasAvailable(getCurrentColor())){
+            changePlayer();
+        }
         status = GameStatus.ANIMAL;
         
     }
