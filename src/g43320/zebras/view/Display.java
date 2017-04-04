@@ -88,6 +88,7 @@ public class Display {
         //ligne 9
         String[] impalaDown = new String[]{".", ".", ".", ".", ".", "."};
         aString = displayImpalaJonesPathUpandDown(aString, impalaDown, impala.isDown(), impala);
+        aString = aString + "Board legend : X for hidden animal "+"\n";
         return aString;
     }
     

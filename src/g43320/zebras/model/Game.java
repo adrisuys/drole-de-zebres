@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package g43320.zebras.model;
 
 import java.util.ArrayList;
@@ -22,6 +17,9 @@ public class Game implements Model {
     private GameStatus status;
     private Player currentPlayer;
 
+    /**
+     * Creates a new instance of a Game.
+     */
     public Game() {
         players = new ArrayList<>();
         Player playerRed = new Player(Color.RED);
@@ -42,21 +40,38 @@ public class Game implements Model {
         
     }
 
+    /**
+     * Return the stock of Pieces.
+     * @return the stock of Pieces.
+     */
     @Override
     public Pieces getPieces() {
         return pieces;
     }
 
+    /**
+     * Return the current player
+     * @return the current player.
+     */
     @Override
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
     
+    /**
+     * Start a match and reset attributes, everything is done by the constructor so it is useless.
+     */
     @Override
     public void start() {
         
     }
 
+    /**
+     * Set Impala Jones first position.
+     *
+     * @param position of Impala Jones at the beginning of game
+     * @throws GameException if game's status isn't GameStatus.INIT.
+     */
     @Override
     public void setImpalaJonesFirstPosition(int position) throws GameException {
         if (status!=GameStatus.INIT) {
@@ -67,6 +82,21 @@ public class Game implements Model {
         status = GameStatus.ANIMAL;
     }
 
+    /**
+     * Put an animal in the Board. Put an animal of the given species for the
+     * current player.
+     *
+     * @param position position on the board
+     * @param species species of an animal
+     * @throws GameException if
+     * <ul>
+     * <li>game's status isn't Status.ANIMAL</li>
+     * <li>or Impala Jones isn't on the the same row or column</li>
+     * <li>or that position is not free</li>
+     * <li>or the current player doesn't have that a tile of that species to
+     * play anymore</li>
+     * </ul>
+     */
     @Override
     public void putAnimal(Coordinates position, Species species) throws GameException {
         if (status!=GameStatus.ANIMAL) {
@@ -84,9 +114,32 @@ public class Game implements Model {
         Color color = getCurrentPlayer().getColor();
         Animal animal = getPieces().getAnimal(color, species);
         getReserve().putAnimal(animal, position);
+        List <Coordinates> adjacents = getReserve().getAdjacents(position);
+        for (Coordinates pos : adjacents) {
+            if (!getReserve().isFree(pos)) {
+                animal.action(getReserve().getAnimal(pos));
+                if (getReserve().getAnimal(pos).getState()==AnimalState.RUN) {
+                    getReserve().getAnimal(pos).setState(AnimalState.REST);
+                    getReserve().removeAnimal(pos);
+                    getPieces().putBackAnimal(getReserve().getAnimal(pos));
+                }
+            }
+            
+        }
         status = GameStatus.IMPALA;
     }
 
+    /**
+     * Move Impala Jones some steps forward.
+     *
+     * @param distance number of step
+     * @throws GameException if
+     * <ul>
+     * <li>game's status isn't Status.IMPALA</li>
+     * <li>or ImpalaJones will arrive on a full row or column</li>
+     * <li>or the distance is too large</li>
+     * </ul>
+     */
     @Override
     public void moveImpalaJones(int distance) throws GameException {
         if (status!=GameStatus.IMPALA) {
@@ -104,35 +157,68 @@ public class Game implements Model {
         
     }
 
+    /**
+     * Return true if the game is over.
+     *
+     * @return true if the game is over
+     */
     @Override
     public boolean isOver() {
         int i = 0;
         while (i<Reserve.LG && reserve.isFullRow(i)) {
             i++;
         }
-        return i==Reserve.LG;
+        return i==Reserve.LG && !getPieces().hasAvailable();
     }
 
+    /**
+     * Return the state of the game.
+     *
+     * @return the state of the game
+     */
     @Override
     public GameStatus getStatus() {
         return status;
     }
 
+    /**
+     * Return the current player color.
+     *
+     * @return the current player color
+     */
     @Override
     public Color getCurrentColor() {
         return getCurrentPlayer().getColor();
     }
 
+    /**
+     * Return the list of all player.
+     *
+     * @return the list of all player
+     */
     @Override
     public List<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Return the reserve.
+     *
+     * @return the reserve.
+     */
     @Override
     public Reserve getReserve() {
         return reserve;
     }
 
+    /**
+     * Return the amount of animals of the specified species that the curent
+     * player can put in the reserve.
+     *
+     * @param species of the animal searched
+     * @return the amount of animals of the specified species for the current
+     * player, left in the stock.
+     */
     @Override
     public int getNb(Species species) {
         Color color = getCurrentPlayer().getColor();
@@ -140,16 +226,30 @@ public class Game implements Model {
         return nbAnimals;
     }
 
+    /**
+     * Return Impala Jones.
+     *
+     * @return Impala Jones
+     */
     @Override
     public ImpalaJones getImpalaJones() {
         return impala;
     }
 
+     /**
+     * Get the score of the player of the given color.
+     *
+     * @param color the color of the player
+     * @return the score of the player of the given color.
+     */
     @Override
     public int getScore(Color color) {
         return 0;     
     }
     
+    /**
+     * After a player is done playing, changes the current player.
+     */
     @Override
     public void changePlayer() {
         if (currentPlayer.equals(players.get(0))){

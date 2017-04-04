@@ -34,8 +34,8 @@ public class ImpalaJones {
      * @param nb
      */
     public void init(int nb) {
-        if (nb>21) {
-            throw new IllegalArgumentException ("Position not valid");
+        if (nb > 21) {
+            throw new IllegalArgumentException("Position not valid");
         }
         position = nb;
     }
@@ -47,13 +47,13 @@ public class ImpalaJones {
      * reserve
      */
     public void move(int distance) {
-        
+
         if (position + distance > 21) {
-            position = (position % POSITIONMAX)-1;
+            position = (position % POSITIONMAX) - 1;
         } else {
             position = position + distance;
         }
-        
+
     }
 
     /**
@@ -71,7 +71,7 @@ public class ImpalaJones {
      * @return true if he is on the down side of the reserve, false otherwise.
      */
     public boolean isDown() {
-        return (position >= Reserve.COL+Reserve.LG && position < Reserve.COL+Reserve.COL+Reserve.LG);
+        return (position >= Reserve.COL + Reserve.LG && position < Reserve.COL + Reserve.COL + Reserve.LG);
     }
 
     /**
@@ -80,7 +80,7 @@ public class ImpalaJones {
      * @return true if he is on the left side of the reserve, false otherwise.
      */
     public boolean isLeft() {
-        return (position >= Reserve.COL+Reserve.COL+Reserve.LG && position < Reserve.COL+Reserve.COL+Reserve.LG+Reserve.LG);
+        return (position >= Reserve.COL + Reserve.COL + Reserve.LG && position < Reserve.COL + Reserve.COL + Reserve.LG + Reserve.LG);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ImpalaJones {
      * @return true if he is on the right side of the reserve, false otherwise.
      */
     public boolean isRight() {
-        return (position >= Reserve.COL && position < Reserve.COL+Reserve.LG);
+        return (position >= Reserve.COL && position < Reserve.COL + Reserve.LG);
     }
 
     /**
@@ -169,10 +169,11 @@ public class ImpalaJones {
     }
 
     /**
+     * Check if a move is valid or not.
      *
-     * @param reserve
-     * @param distance
-     * @return
+     * @param reserve the board of the game.
+     * @param distance the distance Impala Jones is supposed to be moved.
+     * @return true if the move is valid, false if it is not.
      */
     public boolean checkMove(Reserve reserve, int distance) {
         position = position + distance;
@@ -225,12 +226,10 @@ public class ImpalaJones {
      */
     public int findFirst(Reserve reserve) {
         int distance = 1;
-        int cptPas = 1;
         while (!checkMove(reserve, distance)) {
-            move(distance);
-            cptPas++;
+            distance++;
         }
-        return cptPas;
+        return distance;
     }
 
 }

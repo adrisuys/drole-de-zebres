@@ -9,6 +9,7 @@ import java.util.List;
  * @author esiProf
  */
 public interface Model {
+
     /**
      * Start a match and reset attributes.
      */
@@ -111,10 +112,23 @@ public interface Model {
      * @return the score of the player of the given color.
      */
     int getScore(Color color);
-    
+
+    /**
+     * Return the stock of Pieces.
+     *
+     * @return the stock of Pieces.
+     */
     Pieces getPieces();
-    
+
+    /**
+     * Return the current player
+     *
+     * @return the current player.
+     */
     Player getCurrentPlayer();
-    
+
+    /**
+     * After a player is done playing, changes the current player.
+     */
     void changePlayer();
 }

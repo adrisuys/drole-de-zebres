@@ -112,7 +112,7 @@ public class Pieces {
     public Animal getAnimal(Color color, Species species) {
         int i = 0;
         Animal animal = null;
-        while (i < getAnimals().size() && (getAnimals().get(i).getColor()!=color || getAnimals().get(i).getSpecies()!=species)) {
+        while (i < getAnimals().size() && (getAnimals().get(i).getColor() != color || getAnimals().get(i).getSpecies() != species)) {
             i++;
         }
         if (getAnimals().size() == i) {
@@ -120,7 +120,7 @@ public class Pieces {
         } else {
             animal = getAnimals().get(i);
         }
-        
+
         getAnimals().remove(i);
         return animal;
     }
@@ -153,7 +153,28 @@ public class Pieces {
         return nbAnimals;
     }
 
+    /**
+     * Put an animal back in the stock of Pieces.
+     *
+     * @param animal the animal to be put back in the stock
+     */
+    public void putBackAnimal(Animal animal) {
+        animals.add(animal);
+    }
     
-    
+    /**
+     * Check if there is an animal (of the given color) left in the stock.
+     * 
+     * @param color the color associated to the animals
+     * 
+     * @return true if there is still an animal of the given color, false otherwise.
+     */
+    public boolean hasAvailable(Color color) {
+        int i = 0;
+        while (i<animals.size() && animals.get(i).getColor()!=color) {
+            i++;
+        }
+        return i<animals.size();
+    }
 
 }

@@ -62,6 +62,11 @@ public class Player {
         return true;
     }
 
+    /**
+     * Turn an object 'Player' into a String.
+     *
+     * @return a string describing the specie of the animal.
+     */
     @Override
     public String toString() {
         String player;

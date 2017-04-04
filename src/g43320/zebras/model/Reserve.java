@@ -1,5 +1,8 @@
 package g43320.zebras.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The reserve represent the board on which the game takes place.
  *
@@ -117,6 +120,39 @@ public class Reserve {
             i++;
         }
         return i == COL;
+    }
+    
+    /**
+     * Return a list of all the adjacents coordinates of the one entered in argument.
+     * @param position a coordinate on the reserve
+     * @return a list of all the adjacents coordinates of the one entered in argument
+     */
+    public List<Coordinates> getAdjacents (Coordinates position) {
+        List<Coordinates> list = new ArrayList<>();
+        if (position.getRow() != 0) {
+            list.add(new Coordinates(position.getRow() - 1, position.getColumn()));
+        }
+        if (position.getRow() != getAnimals().length - 1) {
+            list.add(new Coordinates(position.getRow() + 1, position.getColumn()));
+        }
+        if (position.getColumn() != 0) {
+            list.add(new Coordinates(position.getRow(), position.getColumn() - 1));
+        }
+        if (position.getColumn() != getAnimals()[position.getRow()].length - 1) {
+            list.add(new Coordinates(position.getRow(), position.getColumn() + 1));
+        }
+        return list;
+    }
+    
+    /**
+     * Remove an animal from the reserve by setting its coordinate to null.
+     * @param pos the coordinates from which an animal must be removed.
+     */
+    public void removeAnimal (Coordinates pos) {
+        if (isFree(pos)) {
+            throw new IllegalArgumentException("There is no animal to be removed");
+        }
+        getAnimals()[pos.getRow()][pos.getColumn()] = null;
     }
 
 }

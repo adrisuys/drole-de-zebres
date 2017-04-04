@@ -1,5 +1,7 @@
 package g43320.zebras.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -90,6 +92,148 @@ public class ReserveTest {
         Animal expResult = animal;
         Animal result = instance.getAnimal(pos);
         assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents1() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (0,0);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(0,1));
+        expResult.add(new Coordinates(1,0));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents2() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (0,3);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(0,2));
+        expResult.add(new Coordinates(1,3));
+        expResult.add(new Coordinates(0,4));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents3() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (0,5);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(0,4));
+        expResult.add(new Coordinates(1,5));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents4() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (2,1);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(1,1));
+        expResult.add(new Coordinates(2,0));
+        expResult.add(new Coordinates(2,2));
+        expResult.add(new Coordinates(3,1));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents5() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (2,3);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(2,2));
+        expResult.add(new Coordinates(2,4));
+        expResult.add(new Coordinates(1,3));
+        expResult.add(new Coordinates(3,3));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents6() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (2,5);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(1,5));
+        expResult.add(new Coordinates(2,4));
+        expResult.add(new Coordinates(3,5));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents7() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (4,0);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(3,0));
+        expResult.add(new Coordinates(4,1));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents8() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (4,2);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(4,1));
+        expResult.add(new Coordinates(3,2));
+        expResult.add(new Coordinates(4,3));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+    
+    /**
+     * Test of getAdjacents method, of class Reserve.
+     */
+    @Test
+    public void testGetAdjacents9() {
+        System.out.println("getAdjacents");
+        Coordinates position = new Coordinates (4,5);
+        Reserve instance = new Reserve();
+        List <Coordinates> expResult = new ArrayList<>();
+        expResult.add(new Coordinates(3,5));
+        expResult.add(new Coordinates(4,4));
+        List <Coordinates> result = instance.getAdjacents(position);
+        assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
     }
 
 }

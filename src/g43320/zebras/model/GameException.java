@@ -1,6 +1,7 @@
 package g43320.zebras.model;
 
 /**
+ * Creats an exception for the game of Drôles de Zèbres.
  *
  * @author s_u_y_s_a
  */

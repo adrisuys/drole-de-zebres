@@ -12,6 +12,7 @@ public class Animal {
 
     private final Species species;
     private final Color color;
+    private AnimalState state;
 
     /**
      * Creates an animal based on a specie and on a color.
@@ -57,15 +58,20 @@ public class Animal {
     public String toString() {
         String animal;
         animal = getSpecies().name().substring(0, 1);
-        if (getColor()==RED) {
+        if (getState() == AnimalState.HIDDEN) {
+            animal = "X";
+        }
+        if (getColor() == RED) {
             return "\u001B[31m" + animal + "\u001B[0m";
         } else {
             return "\u001B[32m" + animal + "\u001B[0m";
         }
+
     }
 
     /**
      * Returns the hash code of a non-null argument and 0 for a null argument.
+     *
      * @return the hash code of a non-null argument and 0 for a null argument.
      */
     @Override
@@ -78,6 +84,7 @@ public class Animal {
 
     /**
      * Returns true if a Animal is equal to the argument and false otherwise.
+     *
      * @param obj any object to be compared to the list.
      * @return true if a Animal is equal to the arguments and false otherwise
      */
@@ -101,7 +108,41 @@ public class Animal {
         }
         return true;
     }
-    
-    
+
+    /**
+     * Get the state of an animal (HIDDEN, REST or RUN).
+     *
+     * @return the state of an animal (HIDDEN, REST or RUN).
+     */
+    public AnimalState getState() {
+        return state;
+    }
+
+    /**
+     * Sets the state.
+     *
+     * @param state the state to be set.
+     */
+    public void setState(AnimalState state) {
+        this.state = state;
+    }
+
+    /**
+     * Determine what happens when two animals are put next to each other.
+     *
+     * @param other an animal that may changes its state as he's put next to
+     * another one.
+     */
+    public void action(Animal other) {
+        if (this.species == Species.LION && other.species == Species.GAZELLE) {
+            other.state = AnimalState.RUN;
+        }
+        if (this.species == Species.LION && other.species == Species.ZEBRA) {
+            other.state = AnimalState.HIDDEN;
+        }
+        if (this.species == Species.ZEBRA && other.species == Species.LION) {
+            this.state = AnimalState.HIDDEN;
+        }
+    }
 
 }
