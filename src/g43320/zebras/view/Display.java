@@ -35,6 +35,7 @@ public class Display {
             aString = aString + "\u001B[32m" +"CROCODILES   " + pieces.getNbAnimals(color, Species.CROCODILE) + "\u001B[0m";
         }
         System.out.println(aString);
+        System.out.println("_____________________");
 
     }
 
@@ -107,6 +108,7 @@ public class Display {
     public static void displayReserve(Reserve reserve, ImpalaJones impala) {
 
         System.out.println(displayReserveFoot(reserve, impala));
+        System.out.println("__________________________________________");
     }
 
     public static int askDistance() {
@@ -187,6 +189,7 @@ public class Display {
     }
     
     public static void displayPlayer (Player currentPlayer) {
+        
         System.out.println("It is time for "+currentPlayer+" to play");
        
     }

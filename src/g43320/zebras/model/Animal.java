@@ -143,6 +143,10 @@ public class Animal {
         if (this.species == Species.ZEBRA && other.species == Species.LION) {
             this.state = AnimalState.HIDDEN;
         }
+        /*if (this.species == Species.GAZELLE && other.species == Species.LION) {
+            this.state = AnimalState.RUN;
+        }*/
+        
     }
 
 }

@@ -34,6 +34,7 @@ public class Zebras {
         while (!game.isOver()) {
             Display.displayStock(game.getPieces(), game.getCurrentColor());
             Display.displayReserve(game.getReserve(), game.getImpalaJones());
+            Display.displayPlayer(game.getCurrentPlayer());
             putAnimal(game);
             Display.displayReserve(game.getReserve(), game.getImpalaJones());
             moveImpalaJones(game);
@@ -69,7 +70,6 @@ public class Zebras {
         while (invalid) {
             invalid = false;
             try {
-                Display.displayPlayer(game.getCurrentPlayer());
                 game.putAnimal(Display.chooseCoordinates(), Display.chooseAnimalFromStock());
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
