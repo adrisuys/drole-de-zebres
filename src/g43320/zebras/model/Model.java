@@ -131,4 +131,8 @@ public interface Model {
      * After a player is done playing, changes the current player.
      */
     void changePlayer();
+    
+    boolean hasNoChoice (Reserve reserve, ImpalaJones impala);
+    
+    boolean isLionNext (Coordinates pos);
 }

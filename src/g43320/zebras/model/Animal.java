@@ -131,7 +131,7 @@ public class Animal {
      * Determine what happens when two animals are put next to each other.
      *
      * @param other an animal that may changes its state as he's put next to
-     * another one.
+     * another one. Other is already on the board.
      */
     public void action(Animal other) {
         if (this.species == Species.LION && other.species == Species.GAZELLE) {
@@ -143,9 +143,9 @@ public class Animal {
         if (this.species == Species.ZEBRA && other.species == Species.LION) {
             this.state = AnimalState.HIDDEN;
         }
-        /*if (this.species == Species.GAZELLE && other.species == Species.LION) {
-            this.state = AnimalState.RUN;
-        }*/
+        if (this.species == Species.GAZELLE && other.species == Species.LION) {
+            this.state = AnimalState.HIDDEN;
+        }
         
     }
 

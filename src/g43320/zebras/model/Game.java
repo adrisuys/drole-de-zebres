@@ -113,20 +113,57 @@ public class Game implements Model {
         }
         Color color = getCurrentPlayer().getColor();
         Animal animal = getPieces().getAnimal(color, species);
-        getReserve().putAnimal(animal, position);
-        List <Coordinates> adjacents = getReserve().getAdjacents(position);
-        for (Coordinates pos : adjacents) {
-            if (!getReserve().isFree(pos)) {
-                animal.action(getReserve().getAnimal(pos));
-                if (getReserve().getAnimal(pos).getState()==AnimalState.RUN) {
-                    getReserve().getAnimal(pos).setState(AnimalState.REST);
-                    getReserve().removeAnimal(pos);
-                    getPieces().putBackAnimal(getReserve().getAnimal(pos));
+        if (species == Species.GAZELLE && isLionNext(position)) {
+            if (hasNoChoice(getReserve(),getImpalaJones())) {    
+                animal.action(new Animal(Species.LION, Color.GREEN));
+                getReserve().putAnimal(animal, position);
+            } else {
+                throw new GameException("You can't put a gazelle nearby a lion unless you have no other choice.");
+            }    
+        } else {
+            getReserve().putAnimal(animal, position);
+            List <Coordinates> adjacents = getReserve().getAdjacents(position);
+            for (Coordinates pos : adjacents) {
+                if (!getReserve().isFree(pos)) {
+                    animal.action(getReserve().getAnimal(pos));
+                    if (getReserve().getAnimal(pos).getState()==AnimalState.RUN) {
+                        if (hasNoChoice(getReserve(),getImpalaJones())) {
+                            getReserve().getAnimal(pos).setState(AnimalState.HIDDEN);
+                        } else {
+                            getReserve().getAnimal(pos).setState(AnimalState.REST);
+                            getPieces().putBackAnimal(getReserve().getAnimal(pos));
+                            getReserve().removeAnimal(pos);  
+                        }
+                    }
+                }        
+            }
+        }
+        
+        status = GameStatus.IMPALA;
+    }
+    
+    public boolean isLionNext (Coordinates pos) {
+        boolean isLionNext = false;
+        List <Coordinates> list = getReserve().getAdjacents(pos);
+        for (Coordinates position : list) {
+            if (!getReserve().isFree(position)) {
+                if (getReserve().getAnimal(position).getSpecies()==Species.LION) {
+                    isLionNext = true;
                 }
             }
-            
         }
-        status = GameStatus.IMPALA;
+        return isLionNext;
+    }
+    
+    public boolean hasNoChoice (Reserve reserve, ImpalaJones impala) {
+        boolean noChoice = true;
+        if (impala.isUp()||impala.isDown()) {
+            noChoice = reserve.isFullColumn(impala.getColumn());
+        }
+        if (impala.isLeft()||impala.isRight()) {
+            noChoice = reserve.isFullRow(impala.getRow());
+        }
+        return noChoice;
     }
 
     /**

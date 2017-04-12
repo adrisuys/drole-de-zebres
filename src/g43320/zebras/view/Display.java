@@ -115,10 +115,20 @@ public class Display {
         Scanner clavier = new Scanner(System.in);
         int distance;
         System.out.println("Give the distance you want Impala Jones to walk, must be a 1, 2 or 3");
-        distance = clavier.nextInt();
+        if(clavier.hasNextInt()) {
+            distance = clavier.nextInt();
+        } else {
+            clavier.next();
+            distance = 0;
+        }
         while (distance < 1 || distance > 4) {
             System.out.println("The distance you entered is not valid, must be a 1, 2 or 3");
-            distance = clavier.nextInt();
+            if(clavier.hasNextInt()) {
+                distance = clavier.nextInt();
+            } else {
+                clavier.next();
+                distance = 0;
+            }
         }
         return distance;
     }
@@ -193,4 +203,6 @@ public class Display {
         System.out.println("It is time for "+currentPlayer+" to play");
        
     }
+    
+    
 }

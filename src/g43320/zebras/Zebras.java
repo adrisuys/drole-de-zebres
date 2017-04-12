@@ -1,9 +1,13 @@
 package g43320.zebras;
 
+import g43320.zebras.model.Animal;
+import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.Game;
 import g43320.zebras.model.GameException;
 import g43320.zebras.model.Model;
+import g43320.zebras.model.Species;
 import g43320.zebras.view.Display;
+import java.util.List;
 
 /**
  * Zebras is the main Class controlling the whole game.
@@ -70,6 +74,7 @@ public class Zebras {
         while (invalid) {
             invalid = false;
             try {
+                
                 game.putAnimal(Display.chooseCoordinates(), Display.chooseAnimalFromStock());
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
@@ -77,7 +82,7 @@ public class Zebras {
             }
         }
     }
-
+                
     /**
      * Move Impala Jones on his path.
      *
