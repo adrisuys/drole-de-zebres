@@ -9,7 +9,7 @@ import java.util.List;
  * @author s_u_y_s_a
  */
 public class Game implements Model {
-    
+
     private final List<Player> players;
     private Reserve reserve;
     private ImpalaJones impala;
@@ -23,25 +23,26 @@ public class Game implements Model {
     public Game() {
         players = new ArrayList<>();
         Player playerRed = new Player(Color.RED);
-        Player playerGreen = new Player (Color.GREEN);
+        Player playerGreen = new Player(Color.GREEN);
         players.add(playerRed);
         players.add(playerGreen);
-        
+
         reserve = new Reserve();
-        
+
         impala = new ImpalaJones();
-        
+
         pieces = new Pieces();
-        
+
         status = GameStatus.INIT;
-        
-        int random = (int) ((Math.random()*2));
+
+        int random = (int) ((Math.random() * 2));
         currentPlayer = players.get(random);
-        
+
     }
 
     /**
      * Return the stock of Pieces.
+     *
      * @return the stock of Pieces.
      */
     @Override
@@ -51,19 +52,21 @@ public class Game implements Model {
 
     /**
      * Return the current player
+     *
      * @return the current player.
      */
     @Override
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
-    
+
     /**
-     * Start a match and reset attributes, everything is done by the constructor so it is useless.
+     * Start a match and reset attributes, everything is done by the constructor
+     * so it is useless.
      */
     @Override
     public void start() {
-        
+
     }
 
     /**
@@ -74,7 +77,7 @@ public class Game implements Model {
      */
     @Override
     public void setImpalaJonesFirstPosition(int position) throws GameException {
-        if (status!=GameStatus.INIT) {
+        if (status != GameStatus.INIT) {
             throw new GameException("It is time for the game to be initialize");
         }
         getImpalaJones().init(position);
@@ -95,72 +98,99 @@ public class Game implements Model {
      * <li>or that position is not free</li>
      * <li>or the current player doesn't have that a tile of that species to
      * play anymore</li>
+     * <li>or if a gazelle sits next to a lion</li>
      * </ul>
      */
     @Override
     public void putAnimal(Coordinates position, Species species) throws GameException {
-        if (status!=GameStatus.ANIMAL) {
+        if (status != GameStatus.ANIMAL) {
             throw new GameException("It is time for the animals to be put on the board");
         }
-        if(impala.getRow()!=position.getRow() && impala.getColumn()!=position.getColumn()) {
+        if (impala.getRow() != position.getRow() && impala.getColumn() != position.getColumn()) {
             throw new GameException("This is not a coordinate that fits with Impala Jones's position");
         }
-        if(!reserve.isFree(position)) {
+        if (!reserve.isFree(position)) {
             throw new GameException("There is already an animal on this position");
         }
-        if(getNb(species)==0) {
+        if (getNb(species) == 0) {
             throw new GameException("You don't have that piece anymore");
         }
         Color color = getCurrentPlayer().getColor();
         Animal animal = getPieces().getAnimal(color, species);
         if (species == Species.GAZELLE && isLionNext(position)) {
-            if (hasNoChoice(getReserve(),getImpalaJones())) {    
+            if (hasNoChoice(getReserve(), getImpalaJones())) {
                 animal.action(new Animal(Species.LION, Color.GREEN));
                 getReserve().putAnimal(animal, position);
             } else {
                 throw new GameException("You can't put a gazelle nearby a lion unless you have no other choice.");
-            }    
+            }
         } else {
             getReserve().putAnimal(animal, position);
-            List <Coordinates> adjacents = getReserve().getAdjacents(position);
-            for (Coordinates pos : adjacents) {
-                if (!getReserve().isFree(pos)) {
-                    animal.action(getReserve().getAnimal(pos));
-                    if (getReserve().getAnimal(pos).getState()==AnimalState.RUN) {
-                        if (hasNoChoice(getReserve(),getImpalaJones())) {
-                            getReserve().getAnimal(pos).setState(AnimalState.HIDDEN);
-                        } else {
-                            getReserve().getAnimal(pos).setState(AnimalState.REST);
-                            getPieces().putBackAnimal(getReserve().getAnimal(pos));
-                            getReserve().removeAnimal(pos);  
-                        }
-                    }
-                }        
-            }
+            verifyActionsAnimal(animal, position);
         }
-        
+
         status = GameStatus.IMPALA;
     }
-    
-    public boolean isLionNext (Coordinates pos) {
+
+    /**
+     * Check if an animal can run away from the board when another is put (if a
+     * gazelle sits next to a lion, it must flee unless it is the only free
+     * position on the row/column).
+     *
+     * @param animal the animal put on the board
+     * @param position the position where the animal is put on the board
+     */
+    @Override
+    public void verifyActionsAnimal(Animal animal, Coordinates position) {
+        List<Coordinates> adjacents = getReserve().getAdjacents(position);
+        for (Coordinates pos : adjacents) {
+            if (!getReserve().isFree(pos)) {
+                animal.action(getReserve().getAnimal(pos));
+                if (getReserve().getAnimal(pos).getState() == AnimalState.RUN) {
+                    if (hasNoChoice(getReserve(), getImpalaJones())) {
+                        getReserve().getAnimal(pos).setState(AnimalState.HIDDEN);
+                    } else {
+                        getReserve().getAnimal(pos).setState(AnimalState.REST);
+                        getPieces().putBackAnimal(getReserve().getAnimal(pos));
+                        getReserve().removeAnimal(pos);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Check if there is a lion in the adjacents cases of a given position.
+     * @param pos the given position 
+     * @return a boolean indicating if there is a lion next to the given position.
+     */
+    @Override
+    public boolean isLionNext(Coordinates pos) {
         boolean isLionNext = false;
-        List <Coordinates> list = getReserve().getAdjacents(pos);
+        List<Coordinates> list = getReserve().getAdjacents(pos);
         for (Coordinates position : list) {
             if (!getReserve().isFree(position)) {
-                if (getReserve().getAnimal(position).getSpecies()==Species.LION) {
+                if (getReserve().getAnimal(position).getSpecies() == Species.LION) {
                     isLionNext = true;
                 }
             }
         }
         return isLionNext;
     }
-    
-    public boolean hasNoChoice (Reserve reserve, ImpalaJones impala) {
+
+    /**
+     * Check if a player has no other choice to put an animal on a position (which means it is the only free case of the row/column)
+     * @param reserve the reserve where the animals are to be put
+     * @param impala Impala Jones
+     * @return true if the player has no choice to put an animal on a position, false otherwise
+     */
+    @Override
+    public boolean hasNoChoice(Reserve reserve, ImpalaJones impala) {
         boolean noChoice = true;
-        if (impala.isUp()||impala.isDown()) {
+        if (impala.isUp() || impala.isDown()) {
             noChoice = reserve.isFullColumn(impala.getColumn());
         }
-        if (impala.isLeft()||impala.isRight()) {
+        if (impala.isLeft() || impala.isRight()) {
             noChoice = reserve.isFullRow(impala.getRow());
         }
         return noChoice;
@@ -179,22 +209,27 @@ public class Game implements Model {
      */
     @Override
     public void moveImpalaJones(int distance) throws GameException {
-        if (status!=GameStatus.IMPALA) {
+        if (status != GameStatus.IMPALA) {
             throw new GameException("It is time for Impala Jones to be moved");
         }
-        if (distance>3) {
+        if (distance > 3) {
             throw new GameException("The distance must not be greater than 3");
         }
         if (!getImpalaJones().checkMove(reserve, distance)) {
             throw new GameException("The column or row indicated by Impala Jones is already full");
         }
-        getImpalaJones().move(distance);
+        if (!getImpalaJones().checkMove(reserve, 1) && !getImpalaJones().checkMove(reserve, 2) && !getImpalaJones().checkMove(reserve, 3)) {
+            int distanceSafety = getImpalaJones().findFirst(reserve);
+            getImpalaJones().move(distanceSafety);
+        } else {
+            getImpalaJones().move(distance);
+        }
         changePlayer();
-        if (!getPieces().hasAvailable(getCurrentColor())){
+        if (!getPieces().hasAvailable(getCurrentColor())) {
             changePlayer();
         }
         status = GameStatus.ANIMAL;
-        
+
     }
 
     /**
@@ -205,10 +240,10 @@ public class Game implements Model {
     @Override
     public boolean isOver() {
         int i = 0;
-        while (i<Reserve.LG && reserve.isFullRow(i)) {
+        while (i < Reserve.LG && reserve.isFullRow(i)) {
             i++;
         }
-        return i==Reserve.LG && !getPieces().hasAvailable();
+        return i == Reserve.LG && !getPieces().hasAvailable();
     }
 
     /**
@@ -276,7 +311,7 @@ public class Game implements Model {
         return impala;
     }
 
-     /**
+    /**
      * Get the score of the player of the given color.
      *
      * @param color the color of the player
@@ -284,20 +319,20 @@ public class Game implements Model {
      */
     @Override
     public int getScore(Color color) {
-        return 0;     
+        return 0;
     }
-    
+
     /**
      * After a player is done playing, changes the current player.
      */
     @Override
     public void changePlayer() {
-        if (currentPlayer.equals(players.get(0))){
+        if (currentPlayer.equals(players.get(0))) {
             currentPlayer = players.get(1);
         } else {
             currentPlayer = players.get(0);
         }
-        
+
     }
 
 }

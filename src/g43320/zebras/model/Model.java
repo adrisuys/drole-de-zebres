@@ -132,7 +132,28 @@ public interface Model {
      */
     void changePlayer();
     
+    /**
+     * Check if a player has no other choice to put an animal on a position (which means it is the only free case of the row/column)
+     * @param reserve the reserve where the animals are to be put
+     * @param impala Impala Jones
+     * @return true if the player has no choice to put an animal on a position, false otherwise
+     */
     boolean hasNoChoice (Reserve reserve, ImpalaJones impala);
     
+    /**
+     * Check if there is a lion in the adjacents cases of a given position.
+     * @param pos the given position 
+     * @return a boolean indicating if there is a lion next to the given position.
+     */
     boolean isLionNext (Coordinates pos);
+    
+    /**
+     * Check if an animal can run away from the board when another is put (if a
+     * gazelle sits next to a lion, it must flee unless it is the only free
+     * position on the row/column).
+     *
+     * @param animal the animal put on the board
+     * @param position the position where the animal is put on the board
+     */
+    void verifyActionsAnimal (Animal animal, Coordinates position);
 }
