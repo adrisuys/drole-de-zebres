@@ -2,8 +2,12 @@ package g43320.zebras.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  * Initialize the JUnit tests for the methods of the class Reserve.
@@ -234,6 +238,126 @@ public class ReserveTest {
         expResult.add(new Coordinates(4,4));
         List <Coordinates> result = instance.getAdjacents(position);
         assertTrue(expResult.containsAll(result) && result.containsAll(expResult));
+    }
+
+
+    /**
+     * Test of isFullColumn method, of class Reserve.
+     */
+    @Test
+    public void testIsFullColumn1() {
+        System.out.println("isFullColumn");
+        int column = 2;
+        Reserve instance = new Reserve();
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(0,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(1,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(3,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(4,2));
+        boolean expResult = true;
+        boolean result = instance.isFullColumn(column);
+        assertEquals(expResult, result);
+    }
+    
+     /**
+     * Test of isFullColumn method, of class Reserve.
+     */
+    @Test
+    public void testIsFullColumn2() {
+        System.out.println("isFullColumn");
+        int column = 2;
+        Reserve instance = new Reserve();
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(3,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(4,2));
+        boolean expResult = false;
+        boolean result = instance.isFullColumn(column);
+        assertEquals(expResult, result);
+    }
+    
+     /**
+     * Test of isFullColumn method, of class Reserve.
+     */
+    @Test
+    public void testIsFullColumn3() {
+        System.out.println("isFullColumn");
+        int column = 2;
+        Reserve instance = new Reserve();
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(0,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(1,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(3,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(4,2));
+        boolean expResult = false;
+        boolean result = instance.isFullColumn(column);
+        assertEquals(expResult, result);
+    }
+
+     /**
+     * Test of isFullRow method, of class Reserve.
+     */
+    @Test
+    public void testIsFullRow1() {
+        System.out.println("isFullColumn");
+        int row = 2;
+        Reserve instance = new Reserve();
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,0));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,1));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,3));
+        boolean expResult = false;
+        boolean result = instance.isFullRow(row);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of isFullRow method, of class Reserve.
+     */
+    @Test
+    public void testIsFullRow2() {
+        System.out.println("isFullColumn");
+        int row = 2;
+        Reserve instance = new Reserve();
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,0));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,3));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,5));
+        boolean expResult = false;
+        boolean result = instance.isFullRow(row);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of isFullRow method, of class Reserve.
+     */
+    @Test
+    public void testIsFullRow3() {
+        System.out.println("isFullColumn");
+        int row = 2;
+        Reserve instance = new Reserve();
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,0));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,1));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,2));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,3));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,4));
+        instance.putAnimal(new Animal (Species.GAZELLE, Color.GREEN), new Coordinates(2,5));
+        boolean expResult = true;
+        boolean result = instance.isFullRow(row);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of removeAnimal method, of class Reserve.
+     */
+    @Test
+    public void testRemoveAnimal() {
+        System.out.println("removeAnimal");
+        Coordinates pos = new Coordinates(1,1);
+        Reserve instance = new Reserve();
+        Animal a = new Animal(Species.CROCODILE, Color.GREEN);
+        instance.putAnimal(a, pos);
+        instance.removeAnimal(pos);
+        Animal expResult = null;
+        Animal result = instance.getAnimal(pos);
+        assertEquals(expResult, result);
     }
 
 }

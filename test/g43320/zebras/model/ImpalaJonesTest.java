@@ -30,13 +30,13 @@ public class ImpalaJonesTest {
     @Test
     public void testMove2() {
         System.out.println("move");
-        int distance = 20;
+        int distance = 19;
         ImpalaJones instance = new ImpalaJones();
         instance.init(0);
         instance.move(distance);
-        instance.move(4);
+        instance.move(3);
         int pos = instance.getPosition();
-        assertEquals(2,pos);
+        assertEquals(0,pos);
     }
     
     /**
@@ -400,9 +400,9 @@ public class ImpalaJonesTest {
         reserve.putAnimal(new Animal(Species.ELEPHANT,Color.RED), new Coordinates(2,0));
         reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(3,0));
         reserve.putAnimal(new Animal(Species.GAZELLE,Color.RED), new Coordinates(4,0));
-        int distance = 16;
+        int distance = 3;
         ImpalaJones instance = new ImpalaJones();
-        instance.init(0);
+        instance.init(19);
         boolean expResult = false;
         boolean result = instance.checkMove(reserve, distance);
         assertEquals(expResult, result);
@@ -503,6 +503,40 @@ public class ImpalaJonesTest {
         ImpalaJones instance = new ImpalaJones();
         instance.init(0);
         int expResult = 2;
+        int result = instance.findFirst(reserve);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of findFirst method, of class ImpalaJones.
+     */
+    @Test
+    public void testFindFirst3() {
+        System.out.println("findFirst");
+        Reserve reserve = new Reserve();
+        reserve.putAnimal(new Animal(Species.LION,Color.RED), new Coordinates(0,1));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(1,1));
+        reserve.putAnimal(new Animal(Species.ELEPHANT,Color.RED), new Coordinates(2,1));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(3,1));
+        reserve.putAnimal(new Animal(Species.GAZELLE,Color.RED), new Coordinates(4,1));
+        reserve.putAnimal(new Animal(Species.LION,Color.RED), new Coordinates(0,2));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(1,2));
+        reserve.putAnimal(new Animal(Species.ELEPHANT,Color.RED), new Coordinates(2,2));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(3,2));
+        reserve.putAnimal(new Animal(Species.GAZELLE,Color.RED), new Coordinates(4,2));
+        reserve.putAnimal(new Animal(Species.LION,Color.RED), new Coordinates(0,3));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(1,3));
+        reserve.putAnimal(new Animal(Species.ELEPHANT,Color.RED), new Coordinates(2,3));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(3,3));
+        reserve.putAnimal(new Animal(Species.GAZELLE,Color.RED), new Coordinates(4,3));
+        reserve.putAnimal(new Animal(Species.LION,Color.RED), new Coordinates(0,4));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(1,4));
+        reserve.putAnimal(new Animal(Species.ELEPHANT,Color.RED), new Coordinates(2,4));
+        reserve.putAnimal(new Animal(Species.ZEBRA,Color.RED), new Coordinates(3,4));
+        reserve.putAnimal(new Animal(Species.GAZELLE,Color.RED), new Coordinates(4,4));
+        ImpalaJones instance = new ImpalaJones();
+        instance.init(0);
+        int expResult = 5;
         int result = instance.findFirst(reserve);
         assertEquals(expResult, result);
     }

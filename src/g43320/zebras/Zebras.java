@@ -4,6 +4,7 @@ import g43320.zebras.model.Animal;
 import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.Game;
 import g43320.zebras.model.GameException;
+import g43320.zebras.model.GameStatus;
 import g43320.zebras.model.Model;
 import g43320.zebras.model.Species;
 import g43320.zebras.view.Display;
@@ -41,7 +42,9 @@ public class Zebras {
             Display.displayPlayer(game.getCurrentPlayer());
             putAnimal(game);
             Display.displayReserve(game.getReserve(), game.getImpalaJones());
-            moveImpalaJones(game);
+            if (!game.isOver()) {
+                moveImpalaJones(game);
+            }
         }
     }
 
@@ -57,10 +60,10 @@ public class Zebras {
             try {
                 Display.displayPlayer(game.getCurrentPlayer());
                 game.setImpalaJonesFirstPosition(Display.initImpala());
-            } catch (GameException ex) {
-                System.out.println(ex.getMessage());
+            } catch (GameException | IllegalArgumentException e) {
+                System.out.println(e.getMessage());
                 invalid = true;
-            }
+            } 
         }
     }
 
@@ -74,7 +77,6 @@ public class Zebras {
         while (invalid) {
             invalid = false;
             try {
-                
                 game.putAnimal(Display.chooseCoordinates(), Display.chooseAnimalFromStock());
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
@@ -93,7 +95,12 @@ public class Zebras {
         while (invalid) {
             invalid = false;
             try {
-                game.moveImpalaJones(Display.askDistance());
+                if (game.getImpalaJones().findFirst(game.getReserve())>=1 && game.getImpalaJones().findFirst(game.getReserve())<=3) {
+                    game.moveImpalaJones(Display.askDistance());
+                } else {
+                    Display.warningAutomaticMoveImpala();
+                    game.moveImpalaJonesAutomatic();
+                }
                 Display.displayPlayer(game.getCurrentPlayer());
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());

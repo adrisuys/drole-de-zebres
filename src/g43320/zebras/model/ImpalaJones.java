@@ -176,13 +176,14 @@ public class ImpalaJones {
      * @return true if the move is valid, false if it is not.
      */
     public boolean checkMove(Reserve reserve, int distance) {
-        position = position + distance;
-        boolean moveChecked;
+        move(distance);
+        boolean moveChecked = false;
         int row = getRow();
         int column = getColumn();
-        if (row == -1) {
+        if (isUp() || isDown()) {
             moveChecked = !reserve.isFullColumn(column);
-        } else {
+        }
+        if (isLeft() || isRight()){
             moveChecked = !reserve.isFullRow(row);
         }
         position = position - distance;

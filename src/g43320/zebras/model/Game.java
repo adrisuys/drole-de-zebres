@@ -215,15 +215,10 @@ public class Game implements Model {
         if (distance > 3) {
             throw new GameException("The distance must not be greater than 3");
         }
-        if (!getImpalaJones().checkMove(reserve, distance)) {
+        if (!getImpalaJones().checkMove(reserve, distance) ) {
             throw new GameException("The column or row indicated by Impala Jones is already full");
         }
-        if (!getImpalaJones().checkMove(reserve, 1) && !getImpalaJones().checkMove(reserve, 2) && !getImpalaJones().checkMove(reserve, 3)) {
-            int distanceSafety = getImpalaJones().findFirst(reserve);
-            getImpalaJones().move(distanceSafety);
-        } else {
-            getImpalaJones().move(distance);
-        }
+        getImpalaJones().move(distance);
         changePlayer();
         if (!getPieces().hasAvailable(getCurrentColor())) {
             changePlayer();
@@ -334,5 +329,25 @@ public class Game implements Model {
         }
 
     }
+
+    /**
+     * Move Impala Jones automatically when the next 3 lines or columns are full.
+     * @throws GameException
+     */
+    @Override
+    public void moveImpalaJonesAutomatic () throws GameException {
+        if (getStatus() != GameStatus.IMPALA) {
+            throw new GameException("It is time for Impala Jones to be moved");
+        }
+        int distanceSafety = getImpalaJones().findFirst(reserve);
+        getImpalaJones().move(distanceSafety);
+        changePlayer();
+        if (!getPieces().hasAvailable(getCurrentColor())) {
+            changePlayer();
+        }
+        status = GameStatus.ANIMAL;
+
+    }
+    
 
 }

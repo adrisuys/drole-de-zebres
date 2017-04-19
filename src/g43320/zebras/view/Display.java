@@ -163,22 +163,23 @@ public class Display {
         Scanner clavier = new Scanner(System.in);
         int distance;
         System.out.println("Give the distance you want Impala Jones to walk, must be a 1, 2 or 3");
-        if (clavier.hasNextInt()) {
-            distance = clavier.nextInt();
-        } else {
-            clavier.next();
-            distance = 0;
-        }
-        while (distance < 1 || distance > 4) {
+        distance = askNumber(clavier);
+        while (distance < 1 && distance > 4) {
             System.out.println("The distance you entered is not valid, must be a 1, 2 or 3");
-            if (clavier.hasNextInt()) {
-                distance = clavier.nextInt();
-            } else {
-                clavier.next();
-                distance = 0;
-            }
+            distance = askNumber(clavier);
         }
         return distance;
+    }
+    
+    public static int askNumber(Scanner clavier) {
+        int nb;
+        if (clavier.hasNextInt()) {
+            nb = clavier.nextInt();
+        } else {
+            clavier.next();
+            nb = 23;
+        }
+        return nb;
     }
 
     /**
@@ -189,9 +190,18 @@ public class Display {
         Species species = null;
         Scanner clavier = new Scanner(System.in);
         System.out.println("It is time to choose an animal to be placed");
-        do {
-            System.out.println("Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE AND CROCODILE");
-            String speciesUser = clavier.next();
+        System.out.println("Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE and CROCODILE");
+        species = chooseAnimal(clavier);
+        while (species == null) {
+            System.out.println("You did not enter a correct name or set of character for the specified animal." + "\n" + "Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE and CROCODILE");
+            species = chooseAnimal(clavier);
+        }
+        return species;
+    }
+    
+    public static Species chooseAnimal(Scanner clavier) {
+        Species species;
+        String speciesUser = clavier.next();
             String speciesUserUpperCase = speciesUser.toUpperCase();
             switch (speciesUserUpperCase) {
                 case "GAZELLE":
@@ -212,10 +222,7 @@ public class Display {
                 default:
                     species = null;
             }
-        } while (species == null);
-
         return species;
-
     }
 
     /**
@@ -231,17 +238,40 @@ public class Display {
         boolean invalid = true;
         while (invalid) {
             invalid = false;
-            System.out.println("Choose a row");
-            row = clavier.nextInt() - 1;
-            System.out.println("Choose a column");
-            column = clavier.nextInt() - 1;
+            row = chooseRow()-1;
+            column = chooseColumn()-1;
             try {
                 position = new Coordinates(row, column);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
                 invalid = true;
             }
         }
         return position;
+    }
+    
+    public static int chooseRow () {
+        Scanner clavier = new Scanner(System.in);
+        int row;
+        System.out.println("Choose a row");
+        row = askNumber(clavier);
+        while (row < 1 && row > 5) {
+            System.out.println("The row you entered is not valid, please choose a correct row");
+            row = askNumber(clavier);
+        }
+        return row;
+    }
+    
+    public static int chooseColumn () {
+        Scanner clavier = new Scanner(System.in);
+        int column;
+        System.out.println("Choose a column");
+        column = askNumber(clavier);
+        while (column < 1 && column > 6) {
+            System.out.println("The column you entered is not valid, please choose a correct row");
+            column = askNumber(clavier);
+        }
+        return column;
     }
 
     /**
@@ -251,11 +281,12 @@ public class Display {
     public static int initImpala() {
         Scanner clavier = new Scanner(System.in);
         int position;
-        do {
-            System.out.println("Put Impala Jones to its first position. Give a position between 0 and 21");
-            position = clavier.nextInt();
-        } while (position < 0 && position > 21);
-
+        System.out.println("Put Impala Jones to its first position. Give a position between 0 and 21");
+        position = askNumber(clavier);
+        while (position < 0 && position > 21) {
+            System.out.println("This is a wrong position for Impala Jones." + "\n" + "Please, put Impala Jones to its first position. Give a position between 0 and 21");
+            position = askNumber(clavier);
+        }
         return position;
     }
 
@@ -269,4 +300,7 @@ public class Display {
 
     }
 
+    public static void warningAutomaticMoveImpala () {
+        System.out.println("You have no choice, Impala Jones will automatically reach its best position!");
+    }
 }

@@ -103,10 +103,10 @@ public class Reserve {
      */
     public boolean isFullColumn (int column) {
         int i = 0;
-        while (i<LG && this.getAnimals()[i][column]!=null) {
+        while (i<LG && !isFree(new Coordinates(i,column))) {
             i++;
         }
-        return i == LG;
+        return i==LG;
     }
     
     /**
@@ -116,7 +116,7 @@ public class Reserve {
      */
     public boolean isFullRow (int row) {
         int i = 0;
-        while (i<COL && this.getAnimals()[row][i]!=null) {
+        while (i<COL && !isFree(new Coordinates(row,i))) {
             i++;
         }
         return i == COL;

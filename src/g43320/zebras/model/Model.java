@@ -156,4 +156,6 @@ public interface Model {
      * @param position the position where the animal is put on the board
      */
     void verifyActionsAnimal (Animal animal, Coordinates position);
+    
+    void moveImpalaJonesAutomatic () throws GameException;
 }
