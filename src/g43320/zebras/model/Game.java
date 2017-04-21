@@ -117,84 +117,28 @@ public class Game implements Model {
         }
         Color color = getCurrentPlayer().getColor();
         Animal animal = getPieces().getAnimal(color, species);
-        if (species == Species.GAZELLE && isLionNext(position)) {
-            if (hasNoChoice(getReserve(), getImpalaJones())) {
-                animal.action(new Animal(Species.LION, Color.GREEN));
-                getReserve().putAnimal(animal, position);
-            } else {
-                throw new GameException("You can't put a gazelle nearby a lion unless you have no other choice.");
+        reserve.putAnimal(animal, position);
+        List<Coordinates> adjacents = reserve.getAdjacents(position);
+        for (Coordinates posAdj : adjacents) {
+            if (!reserve.isFree(posAdj)) {
+                animal.action(reserve.getAnimal(posAdj));
+                if (reserve.getAnimal(posAdj).getState() == AnimalState.RUN) {
+                        reserve.getAnimal(posAdj).setState(AnimalState.REST);
+                        pieces.putBackAnimal(reserve.getAnimal(posAdj));
+                        reserve.removeAnimal(posAdj);
+                        throw new GameException("The lion has scared a/some gazelle(s). It/they has/have fled the board.");
+                }
+                if (animal.getSpecies()==Species.GAZELLE || reserve.getAnimal(posAdj).getSpecies()==Species.LION) {
+                    throw new IllegalArgumentException ("Warning, you are going to put a gazelle near a lion, she will therefore be hidden and will mark 0 points");
+                }
             }
-        } else {
-            getReserve().putAnimal(animal, position);
-            verifyActionsAnimal(animal, position);
         }
-
         status = GameStatus.IMPALA;
     }
+    
+    
 
-    /**
-     * Check if an animal can run away from the board when another is put (if a
-     * gazelle sits next to a lion, it must flee unless it is the only free
-     * position on the row/column).
-     *
-     * @param animal the animal put on the board
-     * @param position the position where the animal is put on the board
-     */
-    @Override
-    public void verifyActionsAnimal(Animal animal, Coordinates position) {
-        List<Coordinates> adjacents = getReserve().getAdjacents(position);
-        for (Coordinates pos : adjacents) {
-            if (!getReserve().isFree(pos)) {
-                animal.action(getReserve().getAnimal(pos));
-                if (getReserve().getAnimal(pos).getState() == AnimalState.RUN) {
-                    if (hasNoChoice(getReserve(), getImpalaJones())) {
-                        getReserve().getAnimal(pos).setState(AnimalState.HIDDEN);
-                    } else {
-                        getReserve().getAnimal(pos).setState(AnimalState.REST);
-                        getPieces().putBackAnimal(getReserve().getAnimal(pos));
-                        getReserve().removeAnimal(pos);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Check if there is a lion in the adjacents cases of a given position.
-     * @param pos the given position 
-     * @return a boolean indicating if there is a lion next to the given position.
-     */
-    @Override
-    public boolean isLionNext(Coordinates pos) {
-        boolean isLionNext = false;
-        List<Coordinates> list = getReserve().getAdjacents(pos);
-        for (Coordinates position : list) {
-            if (!getReserve().isFree(position)) {
-                if (getReserve().getAnimal(position).getSpecies() == Species.LION) {
-                    isLionNext = true;
-                }
-            }
-        }
-        return isLionNext;
-    }
-
-    /**
-     * Check if a player has no other choice to put an animal on a position (which means it is the only free case of the row/column)
-     * @param reserve the reserve where the animals are to be put
-     * @param impala Impala Jones
-     * @return true if the player has no choice to put an animal on a position, false otherwise
-     */
-    @Override
-    public boolean hasNoChoice(Reserve reserve, ImpalaJones impala) {
-        boolean noChoice = true;
-        if (impala.isUp() || impala.isDown()) {
-            noChoice = reserve.isFullColumn(impala.getColumn());
-        }
-        if (impala.isLeft() || impala.isRight()) {
-            noChoice = reserve.isFullRow(impala.getRow());
-        }
-        return noChoice;
-    }
+    
 
     /**
      * Move Impala Jones some steps forward.
@@ -215,7 +159,7 @@ public class Game implements Model {
         if (distance > 3) {
             throw new GameException("The distance must not be greater than 3");
         }
-        if (!getImpalaJones().checkMove(reserve, distance) ) {
+        if (!getImpalaJones().checkMove(reserve, distance)) {
             throw new GameException("The column or row indicated by Impala Jones is already full");
         }
         getImpalaJones().move(distance);
@@ -331,11 +275,13 @@ public class Game implements Model {
     }
 
     /**
-     * Move Impala Jones automatically when the next 3 lines or columns are full.
+     * Move Impala Jones automatically when the next 3 lines or columns are
+     * full.
+     *
      * @throws GameException
      */
     @Override
-    public void moveImpalaJonesAutomatic () throws GameException {
+    public void moveImpalaJonesAutomatic() throws GameException {
         if (getStatus() != GameStatus.IMPALA) {
             throw new GameException("It is time for Impala Jones to be moved");
         }
@@ -348,6 +294,5 @@ public class Game implements Model {
         status = GameStatus.ANIMAL;
 
     }
-    
 
 }

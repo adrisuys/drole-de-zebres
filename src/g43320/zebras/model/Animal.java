@@ -29,6 +29,7 @@ public class Animal {
         }
         this.species = species;
         this.color = color;
+        this.state = AnimalState.REST;
     }
 
     /**
@@ -146,7 +147,6 @@ public class Animal {
         if (this.species == Species.GAZELLE && other.species == Species.LION) {
             this.state = AnimalState.HIDDEN;
         }
-        
     }
 
 }

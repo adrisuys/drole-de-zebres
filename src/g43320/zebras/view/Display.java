@@ -1,7 +1,9 @@
 package g43320.zebras.view;
 
 import g43320.zebras.model.Animal;
+import static g43320.zebras.model.AnimalState.HIDDEN;
 import g43320.zebras.model.Color;
+import static g43320.zebras.model.Color.RED;
 import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.ImpalaJones;
 import g43320.zebras.model.Pieces;
@@ -92,7 +94,8 @@ public class Display {
                 if (animal == null) {
                     aString = aString + "." + " ";
                 } else {
-                    aString = aString + animal + " ";
+                    String animalName = displayAnimal(animal);
+                    aString = aString + animalName + " ";
                 }
             }
             if (impala.getPosition() == 6 + j) {
@@ -103,6 +106,24 @@ public class Display {
         }
 
         return aString;
+    }
+    
+    /**
+     * Display the first letter of the name of the animal (G for gazelle, for example).
+     * @param animal the given animal
+     * @return the first letter of the name (if the animal belongs to the red player, the color of the text is red).
+     */
+    public static String displayAnimal (Animal animal) {
+        String animalStr;
+        animalStr = animal.getSpecies().name().substring(0, 1);
+        if (animal.getState() == HIDDEN) {
+            animalStr = "X";
+        }
+        if (animal.getColor() == RED) {
+            return "\u001B[31m" + animal + "\u001B[0m";
+        } else {
+            return "\u001B[32m" + animal + "\u001B[0m";
+        }
     }
 
     /**
@@ -164,13 +185,18 @@ public class Display {
         int distance;
         System.out.println("Give the distance you want Impala Jones to walk, must be a 1, 2 or 3");
         distance = askNumber(clavier);
-        while (distance < 1 && distance > 4) {
+        while (distance < 1 || distance > 4) {
             System.out.println("The distance you entered is not valid, must be a 1, 2 or 3");
             distance = askNumber(clavier);
         }
         return distance;
     }
     
+    /**
+     * Ask to a user the number of its choice.
+     * @param clavier a Scanner that reads input from the player
+     * @return the nb entered by the user. By default, it returns 23 (if a wrong character is entered).
+     */
     public static int askNumber(Scanner clavier) {
         int nb;
         if (clavier.hasNextInt()) {
@@ -199,6 +225,11 @@ public class Display {
         return species;
     }
     
+    /**
+     * Ask a user to enter a specie of Animal.
+     * @param clavier a Scanner that reads input from the player
+     * @return the species of the animal chosen by the user.
+     */
     public static Species chooseAnimal(Scanner clavier) {
         Species species;
         String speciesUser = clavier.next();
@@ -223,6 +254,38 @@ public class Display {
                     species = null;
             }
         return species;
+    }
+    
+    /**
+     * Ask the user 'yes' or 'no'.
+     * @param clavier a Scanner that reads the input from the user
+     * @return yes or no (depending on the user answer). If the answer is not valid, it returns null.
+     */
+    public static String askYesOrNo(Scanner clavier) {
+        String yesOrNo;
+        String confirmation = clavier.next();
+        String confirmationUpperCase = confirmation.toUpperCase();
+        switch (confirmationUpperCase) {
+            case "OUI" : yesOrNo = "OUI"; break;
+            case "NON" : yesOrNo = "NON"; break;
+            default : yesOrNo = null;
+        }
+        return yesOrNo;
+    }
+    
+    /**
+     * Ask the user if he confirms its move
+     * @return the confirmation (or not-confirmation) of the user.
+     */
+    public static String askConfirmation () {
+        Scanner clavier = new Scanner (System.in);
+        System.out.println("Are you sure about this move? YES or NO ?");
+        String confirmation = askYesOrNo(clavier);
+        while (confirmation.equals(null)) {
+            System.out.println("You did not enter a correct value, you must enter YES or NO. Try again!");
+            confirmation = askYesOrNo(clavier);
+        }
+        return confirmation;
     }
 
     /**
@@ -250,24 +313,32 @@ public class Display {
         return position;
     }
     
+    /**
+     * Ask the player on which row he/she wants to put one of his/her animal.
+     * @return the row the player wants to put the animal.
+     */
     public static int chooseRow () {
         Scanner clavier = new Scanner(System.in);
         int row;
         System.out.println("Choose a row");
         row = askNumber(clavier);
-        while (row < 1 && row > 5) {
+        while (row < 1 || row > 5) {
             System.out.println("The row you entered is not valid, please choose a correct row");
             row = askNumber(clavier);
         }
         return row;
     }
     
+    /**
+     * Ask the player on which column he/she wants to put one of his/her animal.
+     * @return the column the player wants to put the animal.
+     */
     public static int chooseColumn () {
         Scanner clavier = new Scanner(System.in);
         int column;
         System.out.println("Choose a column");
         column = askNumber(clavier);
-        while (column < 1 && column > 6) {
+        while (column < 1 || column > 6) {
             System.out.println("The column you entered is not valid, please choose a correct row");
             column = askNumber(clavier);
         }
@@ -283,7 +354,7 @@ public class Display {
         int position;
         System.out.println("Put Impala Jones to its first position. Give a position between 0 and 21");
         position = askNumber(clavier);
-        while (position < 0 && position > 21) {
+        while (position < 0 || position > 21) {
             System.out.println("This is a wrong position for Impala Jones." + "\n" + "Please, put Impala Jones to its first position. Give a position between 0 and 21");
             position = askNumber(clavier);
         }
@@ -295,11 +366,35 @@ public class Display {
      * @param currentPlayer the current player.
      */
     public static void displayPlayer(Player currentPlayer) {
-
-        System.out.println("It is time for " + currentPlayer + " to play");
+        String aString;
+        String playerName = displayPlayerName(currentPlayer);
+        if (currentPlayer.getColor()==Color.RED) {
+            aString = "\u001B[31m"+"It is "+playerName+"'s turn"+"\u001B[0m";
+        } else {
+            aString = "\u001B[32m"+"It is "+playerName+"'s turn"+"\u001B[0m";
+        }
+        System.out.println(aString);
 
     }
+    
+    /**
+     * Display the name of the player.
+     * @param player one of the player
+     * @return return the name of the player
+     */
+    public static String displayPlayerName (Player player) {
+        String playerName;
+        if (player.getColor()==Color.GREEN){
+            playerName = "player GREEN";
+        } else {
+            playerName = "player RED";
+        }
+        return playerName;
+    }
 
+    /**
+     * Display a warning when Impala Jones is moved automocally (by the system and not one of the player).
+     */
     public static void warningAutomaticMoveImpala () {
         System.out.println("You have no choice, Impala Jones will automatically reach its best position!");
     }

@@ -1,14 +1,9 @@
 package g43320.zebras;
 
-import g43320.zebras.model.Animal;
-import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.Game;
 import g43320.zebras.model.GameException;
-import g43320.zebras.model.GameStatus;
 import g43320.zebras.model.Model;
-import g43320.zebras.model.Species;
 import g43320.zebras.view.Display;
-import java.util.List;
 
 /**
  * Zebras is the main Class controlling the whole game.
@@ -105,6 +100,14 @@ public class Zebras {
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
                 invalid = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                String agreed = Display.askConfirmation();
+                if (agreed.equals("YES")) {
+                    invalid = false;
+                } else {
+                    invalid = true;
+                }
             }
         }
     }
