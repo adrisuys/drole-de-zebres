@@ -41,6 +41,7 @@ public class Zebras {
                 moveImpalaJones(game);
             }
         }
+        Display.endOfGame();
     }
 
     /**
@@ -96,7 +97,6 @@ public class Zebras {
                     Display.warningAutomaticMoveImpala();
                     game.moveImpalaJonesAutomatic();
                 }
-                Display.displayPlayer(game.getCurrentPlayer());
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
                 invalid = true;

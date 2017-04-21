@@ -43,8 +43,9 @@ public class Display {
             aString = aString + "\u001B[32m" + "LION         " + pieces.getNbAnimals(color, Species.LION) + "\n" + "\u001B[0m";
             aString = aString + "\u001B[32m" + "CROCODILES   " + pieces.getNbAnimals(color, Species.CROCODILE) + "\u001B[0m";
         }
+        System.out.println("__________________________________________");
         System.out.println(aString);
-        System.out.println("_____________________");
+        System.out.println("__________________________________________");
 
     }
 
@@ -171,7 +172,7 @@ public class Display {
      * @param impala Impala Jones.
      */
     public static void displayReserve(Reserve reserve, ImpalaJones impala) {
-
+        System.out.println("__________________________________________");
         System.out.println(displayReserveFoot(reserve, impala));
         System.out.println("__________________________________________");
     }
@@ -397,5 +398,12 @@ public class Display {
      */
     public static void warningAutomaticMoveImpala () {
         System.out.println("You have no choice, Impala Jones will automatically reach its best position!");
+    }
+    
+    /**
+     * Display a little message at the end of the game.
+     */
+    public static void endOfGame() {
+        System.out.println("The game is over! Congratz to the two of you! May the best wins");
     }
 }
