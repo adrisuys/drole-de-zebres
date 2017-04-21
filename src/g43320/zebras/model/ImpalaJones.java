@@ -22,7 +22,7 @@ public class ImpalaJones {
     /**
      * Get the position of Impala Jones (between 0 and 21).
      *
-     * @return
+     * @return the position of Impala Jones.
      */
     public int getPosition() {
         return position;
@@ -31,7 +31,7 @@ public class ImpalaJones {
     /**
      * Put Impala Jones on his initial position.
      *
-     * @param nb
+     * @param nb the position at which Impala Jones must be put at the beginning of the game
      */
     public void init(int nb) {
         if (nb > 21) {

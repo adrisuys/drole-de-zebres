@@ -126,11 +126,8 @@ public class Game implements Model {
                         reserve.getAnimal(posAdj).setState(AnimalState.REST);
                         pieces.putBackAnimal(reserve.getAnimal(posAdj));
                         reserve.removeAnimal(posAdj);
-                        throw new GameException("The lion has scared a/some gazelle(s). It/they has/have fled the board.");
                 }
-                if (animal.getSpecies()==Species.GAZELLE || reserve.getAnimal(posAdj).getSpecies()==Species.LION) {
-                    throw new IllegalArgumentException ("Warning, you are going to put a gazelle near a lion, she will therefore be hidden and will mark 0 points");
-                }
+                
             }
         }
         status = GameStatus.IMPALA;
@@ -278,7 +275,7 @@ public class Game implements Model {
      * Move Impala Jones automatically when the next 3 lines or columns are
      * full.
      *
-     * @throws GameException
+     * @throws GameException if the game status has not been put to IMPALA.
      */
     @Override
     public void moveImpalaJonesAutomatic() throws GameException {

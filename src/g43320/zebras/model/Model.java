@@ -136,7 +136,7 @@ public interface Model {
     
     /**
      * Move Impala Jones automatically when the next 3 lines or columns are full.
-     * @throws GameException
+     * @throws GameException if the game status has not been put to IMPALA.
      */
     void moveImpalaJonesAutomatic () throws GameException;
     

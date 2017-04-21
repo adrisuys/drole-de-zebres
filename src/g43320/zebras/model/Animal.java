@@ -136,16 +136,16 @@ public class Animal {
      */
     public void action(Animal other) {
         if (this.species == Species.LION && other.species == Species.GAZELLE) {
-            other.state = AnimalState.RUN;
+            other.setState(AnimalState.RUN);
         }
         if (this.species == Species.LION && other.species == Species.ZEBRA) {
-            other.state = AnimalState.HIDDEN;
+            other.setState(AnimalState.HIDDEN);
         }
         if (this.species == Species.ZEBRA && other.species == Species.LION) {
-            this.state = AnimalState.HIDDEN;
+            this.setState(AnimalState.HIDDEN);
         }
         if (this.species == Species.GAZELLE && other.species == Species.LION) {
-            this.state = AnimalState.HIDDEN;
+            this.setState(AnimalState.HIDDEN);
         }
     }
 

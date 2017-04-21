@@ -266,8 +266,8 @@ public class Display {
         String confirmation = clavier.next();
         String confirmationUpperCase = confirmation.toUpperCase();
         switch (confirmationUpperCase) {
-            case "OUI" : yesOrNo = "OUI"; break;
-            case "NON" : yesOrNo = "NON"; break;
+            case "YES" : yesOrNo = "YES"; break;
+            case "NO" : yesOrNo = "NO"; break;
             default : yesOrNo = null;
         }
         return yesOrNo;

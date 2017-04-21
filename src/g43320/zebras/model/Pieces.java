@@ -43,10 +43,10 @@ public class Pieces {
         Animal gazelleGre = new Animal(Species.GAZELLE, Color.GREEN);
         Animal gazelleRed = new Animal(Species.GAZELLE, Color.RED);
         for (int i = 0; i < NB_GAZELLE; i++) {
-            getAnimals().add(i, gazelleGre);
+            getAnimals().add(gazelleGre);
         }
         for (int i = 0; i < NB_GAZELLE; i++) {
-            getAnimals().add(i, gazelleRed);
+            getAnimals().add(gazelleRed);
         }
     }
 
@@ -78,10 +78,10 @@ public class Pieces {
         Animal zebraGre = new Animal(Species.ZEBRA, Color.GREEN);
         Animal zebraRed = new Animal(Species.ZEBRA, Color.RED);
         for (int i = 0; i < NB_ZEBRA; i++) {
-            getAnimals().add(i, zebraGre);
+            getAnimals().add(zebraGre);
         }
         for (int i = 0; i < NB_ZEBRA; i++) {
-            getAnimals().add(i, zebraRed);
+            getAnimals().add(zebraRed);
         }
     }
 
@@ -93,10 +93,10 @@ public class Pieces {
         Animal crocoGre = new Animal(Species.CROCODILE, Color.GREEN);
         Animal crocoRed = new Animal(Species.CROCODILE, Color.RED);
         for (int i = 0; i < NB_CROCODILE; i++) {
-            getAnimals().add(i, crocoGre);
+            getAnimals().add(crocoGre);
         }
         for (int i = 0; i < NB_CROCODILE; i++) {
-            getAnimals().add(i, crocoRed);
+            getAnimals().add(crocoRed);
         }
     }
 
@@ -110,18 +110,8 @@ public class Pieces {
      * throw a exception if no animal matches the parameters.
      */
     public Animal getAnimal(Color color, Species species) {
-        int i = 0;
-        Animal animal = null;
-        while (i < getAnimals().size() && (getAnimals().get(i).getColor() != color || getAnimals().get(i).getSpecies() != species)) {
-            i++;
-        }
-        if (getAnimals().size() == i) {
-            throw new ArrayIndexOutOfBoundsException("The animal is not in the list");
-        } else {
-            animal = getAnimals().get(i);
-        }
-
-        getAnimals().remove(i);
+        Animal animal = new Animal (species, color);
+        animals.remove(animal);
         return animal;
     }
 

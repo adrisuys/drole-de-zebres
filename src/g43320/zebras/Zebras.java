@@ -15,7 +15,7 @@ public class Zebras {
     /**
      * Interface of the game Drôles de Zèbres.
      *
-     * @param args
+     * @param args the arguments of the method.
      */
     public static void main(String[] args) {
 
@@ -100,14 +100,6 @@ public class Zebras {
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
                 invalid = true;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                String agreed = Display.askConfirmation();
-                if (agreed.equals("YES")) {
-                    invalid = false;
-                } else {
-                    invalid = true;
-                }
             }
         }
     }

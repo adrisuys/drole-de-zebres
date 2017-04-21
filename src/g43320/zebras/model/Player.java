@@ -14,7 +14,7 @@ public class Player {
 
     /**
      * Creates a player by giving it a color (green or red).
-     * @param color 
+     * @param color  the color of the player (red or green).
      */
     public Player(Color color) {
         this.color = color;
