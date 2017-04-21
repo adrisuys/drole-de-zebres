@@ -34,6 +34,7 @@ public class Reserve {
      * Determine if a position on the reserve is free.
      *
      * @param pos a coordinate on the reserve.
+     * @throws IllegalArgumentException if the coordinates is null.S
      * @return a boolean indicating if the position is free.
      */
     public boolean isFree(Coordinates pos) {
@@ -49,6 +50,10 @@ public class Reserve {
      *
      * @param animal an Animal to be put on the reserve
      * @param pos the Coordinate where the Animal is to be put.
+     * 
+     * @throws IllegalArgumentException if : 
+     * - the coordinates is null?
+     * - the position has already an animal on it.
      */
     public void putAnimal(Animal animal, Coordinates pos) {
         if (pos == null) {
@@ -65,6 +70,7 @@ public class Reserve {
      * 'pos'.
      *
      * @param pos a Coordinate on the reserve.
+     * @throws IllegalArgumentException if the coordinates are null.
      * @return the animal at the Coordinate indicated by 'pos', null if the
      * coordinates is free.
      */
@@ -147,6 +153,7 @@ public class Reserve {
     /**
      * Remove an animal from the reserve by setting its coordinate to null.
      * @param pos the coordinates from which an animal must be removed.
+     * @throws IllegalArgumentException when the position is free.
      */
     public void removeAnimal (Coordinates pos) {
         if (isFree(pos)) {

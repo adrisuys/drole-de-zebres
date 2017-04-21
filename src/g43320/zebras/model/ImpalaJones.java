@@ -32,6 +32,8 @@ public class ImpalaJones {
      * Put Impala Jones on his initial position.
      *
      * @param nb the position at which Impala Jones must be put at the beginning of the game
+     * 
+     * @throws IllegalArgumentException if the nb is greater than 21
      */
     public void init(int nb) {
         if (nb > 21) {

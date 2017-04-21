@@ -16,6 +16,9 @@ public class Coordinates {
      *
      * @param row the row of a 2D array.
      * @param column the column of a 2D array.
+     * 
+     * @throws IllegalArgumentException if the row is not included between 0 and 4
+     * @throws IllegalArgumentException if the column is not included between 0 and 5
      */
     public Coordinates(int row, int column) {
         if (row < 0 && row > Reserve.LG - 1) {
