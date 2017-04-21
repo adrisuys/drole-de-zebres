@@ -10,7 +10,6 @@ import g43320.zebras.model.Pieces;
 import g43320.zebras.model.Player;
 import g43320.zebras.model.Reserve;
 import g43320.zebras.model.Species;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -185,9 +184,11 @@ public class Display {
         Scanner clavier = new Scanner(System.in);
         int distance;
         System.out.println("Give the distance you want Impala Jones to walk, must be a 1, 2 or 3");
+        System.out.print("> ");
         distance = askNumber(clavier);
         while (distance < 1 || distance > 4) {
             System.out.println("The distance you entered is not valid, must be a 1, 2 or 3");
+            System.out.print("> ");
             distance = askNumber(clavier);
         }
         return distance;
@@ -218,9 +219,11 @@ public class Display {
         Scanner clavier = new Scanner(System.in);
         System.out.println("It is time to choose an animal to be placed");
         System.out.println("Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE and CROCODILE");
+        System.out.print("> ");
         species = chooseAnimal(clavier);
         while (species == null) {
             System.out.println("You did not enter a correct name or set of character for the specified animal." + "\n" + "Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE and CROCODILE");
+            System.out.print("> ");
             species = chooseAnimal(clavier);
         }
         return species;
@@ -257,37 +260,6 @@ public class Display {
         return species;
     }
     
-    /**
-     * Ask the user 'yes' or 'no'.
-     * @param clavier a Scanner that reads the input from the user
-     * @return yes or no (depending on the user answer). If the answer is not valid, it returns null.
-     */
-    public static String askYesOrNo(Scanner clavier) {
-        String yesOrNo;
-        String confirmation = clavier.next();
-        String confirmationUpperCase = confirmation.toUpperCase();
-        switch (confirmationUpperCase) {
-            case "YES" : yesOrNo = "YES"; break;
-            case "NO" : yesOrNo = "NO"; break;
-            default : yesOrNo = null;
-        }
-        return yesOrNo;
-    }
-    
-    /**
-     * Ask the user if he confirms its move
-     * @return the confirmation (or not-confirmation) of the user.
-     */
-    public static String askConfirmation () {
-        Scanner clavier = new Scanner (System.in);
-        System.out.println("Are you sure about this move? YES or NO ?");
-        String confirmation = askYesOrNo(clavier);
-        while (confirmation.equals(null)) {
-            System.out.println("You did not enter a correct value, you must enter YES or NO. Try again!");
-            confirmation = askYesOrNo(clavier);
-        }
-        return confirmation;
-    }
 
     /**
      * Ask the user on which case of the board he/she wants to put an animal.
@@ -322,9 +294,11 @@ public class Display {
         Scanner clavier = new Scanner(System.in);
         int row;
         System.out.println("Choose a row");
+        System.out.print("> ");
         row = askNumber(clavier);
         while (row < 1 || row > 5) {
             System.out.println("The row you entered is not valid, please choose a correct row");
+            System.out.print("> ");
             row = askNumber(clavier);
         }
         return row;
@@ -338,9 +312,11 @@ public class Display {
         Scanner clavier = new Scanner(System.in);
         int column;
         System.out.println("Choose a column");
+        System.out.print("> ");
         column = askNumber(clavier);
         while (column < 1 || column > 6) {
             System.out.println("The column you entered is not valid, please choose a correct row");
+            System.out.print("> ");
             column = askNumber(clavier);
         }
         return column;
@@ -354,9 +330,11 @@ public class Display {
         Scanner clavier = new Scanner(System.in);
         int position;
         System.out.println("Put Impala Jones to its first position. Give a position between 0 and 21");
+        System.out.print("> ");
         position = askNumber(clavier);
         while (position < 0 || position > 21) {
             System.out.println("This is a wrong position for Impala Jones." + "\n" + "Please, put Impala Jones to its first position. Give a position between 0 and 21");
+            System.out.print("> ");
             position = askNumber(clavier);
         }
         return position;
@@ -397,7 +375,7 @@ public class Display {
      * Display a warning when Impala Jones is moved automocally (by the system and not one of the player).
      */
     public static void warningAutomaticMoveImpala () {
-        System.out.println("You have no choice, Impala Jones will automatically reach its best position!");
+        System.out.println("!!! You have no choice, Impala Jones will automatically reach its best position !!!");
     }
     
     /**
