@@ -73,7 +73,7 @@ public class Zebras {
         while (invalid) {
             invalid = false;
             try {
-                game.putAnimal(Display.chooseCoordinates(), Display.chooseAnimalFromStock());
+                game.putAnimal(Display.chooseCoordinates(game.getImpalaJones()), Display.chooseAnimalFromStock());
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
                 invalid = true;

@@ -13,12 +13,81 @@ public class Reserve {
     private final Animal[][] animals;
     final static int COL = 6;
     final static int LG = 5;
+    private List <Sector> sectors;
 
     /**
      * Creates a reserve, which is a 2D array of 5x6 of Animals.
      */
     public Reserve() {
         this.animals = new Animal[this.LG][this.COL];
+        sectors = new ArrayList <>();
+        sectors.add(new Sector (1, createsSector1()));
+        sectors.add(new Sector (2, createsSector2()));
+        sectors.add(new Sector (3, createsSector3()));
+        sectors.add(new Sector (4, createsSector4()));
+        sectors.add(new Sector (5, createsSector5()));
+        sectors.add(new Sector (6, createsSector6()));
+    }
+    
+    private Coordinates [] createsSector1() {
+        Coordinates [] coord1 = new Coordinates [5];
+        coord1[0] = new Coordinates (0,0);
+        coord1[1] = new Coordinates (1,0);
+        coord1[2] = new Coordinates (2,0);
+        coord1[3] = new Coordinates (2,1);
+        coord1[4] = new Coordinates (3,1);
+        return coord1;
+    }
+    
+    private Coordinates [] createsSector2() {
+        Coordinates [] coord1 = new Coordinates [7];
+        coord1[0] = new Coordinates (0,1);
+        coord1[1] = new Coordinates (1,1);
+        coord1[2] = new Coordinates (1,2);
+        coord1[3] = new Coordinates (2,2);
+        coord1[4] = new Coordinates (3,2);
+        coord1[5] = new Coordinates (3,3);
+        coord1[6] = new Coordinates (3,4);
+        return coord1;
+    }
+    
+    private Coordinates [] createsSector3() {
+        Coordinates [] coord1 = new Coordinates [7];
+        coord1[0] = new Coordinates (0,2);
+        coord1[1] = new Coordinates (0,3);
+        coord1[2] = new Coordinates (0,4);
+        coord1[3] = new Coordinates (0,5);
+        coord1[4] = new Coordinates (1,3);
+        coord1[5] = new Coordinates (2,3);
+        coord1[6] = new Coordinates (2,4);
+        return coord1;
+    }
+    
+    private Coordinates [] createsSector4() {
+        Coordinates [] coord1 = new Coordinates [3];
+        coord1[0] = new Coordinates (1,4);
+        coord1[1] = new Coordinates (1,5);
+        coord1[2] = new Coordinates (2,5);
+        
+        return coord1;
+    }
+    
+    private Coordinates [] createsSector5() {
+        Coordinates [] coord1 = new Coordinates [3];
+        coord1[0] = new Coordinates (3,0);
+        coord1[1] = new Coordinates (4,0);
+        coord1[2] = new Coordinates (4,1);
+        return coord1;
+    }
+    
+    private Coordinates [] createsSector6() {
+        Coordinates [] coord1 = new Coordinates [5];
+        coord1[0] = new Coordinates (4,2);
+        coord1[1] = new Coordinates (4,3);
+        coord1[2] = new Coordinates (4,4);
+        coord1[3] = new Coordinates (4,5);
+        coord1[4] = new Coordinates (3,5);
+        return coord1;
     }
 
     /**
@@ -161,5 +230,21 @@ public class Reserve {
         }
         getAnimals()[pos.getRow()][pos.getColumn()] = null;
     }
+    
+    public Sector getSector (Coordinates coord) {
+        Sector sectorContaining = null;
+        for( Sector sect : sectors) {
+            if (sect.contains(coord) == true) {
+                sectorContaining = sect; 
+            }
+        }
+        return sectorContaining;
+    }
+
+    public List<Sector> getSectors() {
+        return sectors;
+    }
+    
+    
 
 }

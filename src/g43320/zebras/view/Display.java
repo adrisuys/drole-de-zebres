@@ -9,6 +9,7 @@ import g43320.zebras.model.ImpalaJones;
 import g43320.zebras.model.Pieces;
 import g43320.zebras.model.Player;
 import g43320.zebras.model.Reserve;
+import g43320.zebras.model.Sector;
 import g43320.zebras.model.Species;
 import java.util.Scanner;
 
@@ -90,13 +91,16 @@ public class Display {
             } else {
                 aString = aString + ". | ";
             }
-            for (Animal animal : reserve.getAnimals()[j]) {
-                if (animal == null) {
-                    aString = aString + "." + " ";
+            String string2;
+            for (int k=0; k<reserve.getAnimals()[j].length; k++) {
+                if (reserve.getAnimals()[j][k] == null) {
+                    string2 = ".";
                 } else {
-                    String animalName = displayAnimal(animal);
-                    aString = aString + animalName + " ";
+                    String animalName = displayAnimal(reserve.getAnimals()[j][k]);
+                    string2 = animalName;
                 }
+                string2 = coloringBoard(reserve,j,k,string2);
+                aString = aString + string2 + " ";
             }
             if (impala.getPosition() == 6 + j) {
                 aString = aString + "| I" + "\n";
@@ -157,9 +161,9 @@ public class Display {
         if (upOrDown) {
             path[impala.getColumn()] = "I";
         }
-        aString = aString + "     ";
+        aString = aString + "      ";
         for (String s : path) {
-            aString = aString + " " + s;
+            aString = aString+ s + " " ;
         }
         aString = aString + "    " + "\n";
         return aString;
@@ -263,9 +267,10 @@ public class Display {
 
     /**
      * Ask the user on which case of the board he/she wants to put an animal.
+     * @impala its position force on the coordinates (column or row)
      * @return a Coordinates where the animal are to be put.
      */
-    public static Coordinates chooseCoordinates() {
+    public static Coordinates chooseCoordinates(ImpalaJones impala) {
         int row;
         int column;
         Scanner clavier = new Scanner(System.in);
@@ -274,8 +279,14 @@ public class Display {
         boolean invalid = true;
         while (invalid) {
             invalid = false;
-            row = chooseRow()-1;
-            column = chooseColumn()-1;
+            if (impala.isUp()||impala.isDown()) {
+                row = chooseRow()-1;
+                column = impala.getColumn();
+            } else {
+                row = impala.getRow();
+                column = chooseColumn()-1;
+            }
+            
             try {
                 position = new Coordinates(row, column);
             } catch (IllegalArgumentException e) {
@@ -383,5 +394,20 @@ public class Display {
      */
     public static void endOfGame() {
         System.out.println("The game is over! Congratz to the two of you! May the best wins");
+    }
+    
+    public static String coloringBoard (Reserve reserve, int row, int col, String aString) {
+        Coordinates pos = new Coordinates (row,col);
+        Sector sector = reserve.getSector(pos);
+        String newString;
+        switch (sector.getNumber()) {
+            case 1 : newString = "\u001B[43;1m" + aString + "\u001B[0m"; break;
+            case 2 : newString = "\u001B[47;1m" + aString + "\u001B[0m"; break;
+            case 3 : newString = "\u001B[46;1m" + aString + "\u001B[0m"; break;
+            case 4 : newString = "\u001B[43;1m" + aString + "\u001B[0m"; break;
+            case 5 : newString = "\u001B[47;1m" + aString + "\u001B[0m"; break;
+            default : newString = "\u001B[46;1m" + aString + "\u001B[0m"; break;
+        }
+        return newString;
     }
 }

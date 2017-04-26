@@ -2,12 +2,8 @@ package g43320.zebras.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
 
 /**
  * Initialize the JUnit tests for the methods of the class Reserve.
@@ -15,6 +11,8 @@ import org.junit.BeforeClass;
  * @author s_u_y_s_a
  */
 public class ReserveTest {
+
+    
 
     /**
      * Test of isFree method, of class Reserve.
@@ -357,6 +355,45 @@ public class ReserveTest {
         instance.removeAnimal(pos);
         Animal expResult = null;
         Animal result = instance.getAnimal(pos);
+        assertEquals(expResult, result);
+    }
+
+    /**
+    * Test of getSector method, of class Reserve.
+    */
+    @Test
+    public void testGetSector1() {
+        System.out.println("getSector");
+        Coordinates pos = new Coordinates (0,0);
+        Reserve instance = new Reserve();
+        Sector expResult = instance.getSectors().get(0);
+        Sector result = instance.getSector(pos);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+    * Test of getSector method, of class Reserve.
+    */
+    @Test
+    public void testGetSector2() {
+        System.out.println("getSector");
+        Coordinates pos = new Coordinates (1,5);
+        Reserve instance = new Reserve();
+        Sector expResult = instance.getSectors().get(3);
+        Sector result = instance.getSector(pos);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+    * Test of getSector method, of class Reserve.
+    */
+    @Test
+    public void testGetSector3() {
+        System.out.println("getSector");
+        Coordinates pos = new Coordinates (4,4);
+        Reserve instance = new Reserve();
+        Sector expResult = instance.getSectors().get(5);
+        Sector result = instance.getSector(pos);
         assertEquals(expResult, result);
     }
 
