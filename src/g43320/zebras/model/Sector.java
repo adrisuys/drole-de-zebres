@@ -60,7 +60,7 @@ public class Sector {
     
     public boolean isFull() {
         int i = 0;
-        while (i<coordinates.size() && coordinates.get(i) != null) {
+        while (i<coordinates.size() && reserve.getAnimal(coordinates.get(i)) != null) {
             i++;
         }
         return i==coordinates.size();
