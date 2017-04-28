@@ -10,22 +10,32 @@ public enum Species {
     /**
      * animals that are gazelles.
      */
-    GAZELLE,
+    GAZELLE(2),
     /**
      * animals that are zebras.
      */
-    ZEBRA,
+    ZEBRA(6),
     /**
      * animals that are lions.
      */
-    LION,
+    LION(1),
     /**
      * animals that are elephants.
      */
-    ELEPHANT,
+    ELEPHANT(5),
     /**
      * animals that are crocodiles.
      */
-    CROCODILE;
+    CROCODILE(0);
+    
+    private int value;
+
+    private Species(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
 
 }

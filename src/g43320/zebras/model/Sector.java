@@ -12,11 +12,13 @@ public class Sector {
     
     private int number;
     private List <Coordinates> coordinates;
+    private Reserve reserve;
 
-    public Sector(int number, Coordinates... coordinates) {
+    public Sector(int number, Reserve reserve, Coordinates... coordinates) {
         this.number = number;
         List <Coordinates> coord = Arrays.asList(coordinates);
         this.coordinates = coord;
+        this.reserve = reserve;
     }
 
     public int getNumber() {
@@ -56,7 +58,40 @@ public class Sector {
         return true;
     }
     
+    public boolean isFull() {
+        int i = 0;
+        while (i<coordinates.size() && coordinates.get(i) != null) {
+            i++;
+        }
+        return i==coordinates.size();
+    }
     
+    public boolean hasMajority(Color color) {
+        if (!isFull()) {
+            throw new IllegalArgumentException("The sector is not full, no one has a majority yet");
+        }
+        int cptRed = 0;
+        int cptGreen = 0;
+        for (Coordinates pos : coordinates) {
+            if (reserve.getAnimal(pos).getColor()==Color.RED) {
+                cptRed ++;
+            } else {
+                cptGreen ++;
+            }
+        }
+        return ((color == Color.GREEN && cptGreen>cptRed)||(color == Color.RED && cptRed>cptGreen));
+    }
+    
+    public int getScore () {
+        if (!isFull()) {
+            throw new IllegalArgumentException("The sector is not full, we can't calculate the score yet");
+        }
+        int score = 0;
+        for (Coordinates pos : coordinates) {
+            score = score + reserve.getAnimal(pos).getSpecies().getValue();
+        }
+        return score;
+    }
     
     
 }

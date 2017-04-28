@@ -148,5 +148,15 @@ public class Animal {
             this.setState(AnimalState.HIDDEN);
         }
     }
+    
+    public int getValue () {
+        int value;
+        if (state == AnimalState.HIDDEN) {
+            value = 0;
+        } else {
+            value = species.getValue();
+        }
+        return value;
+    }
 
 }

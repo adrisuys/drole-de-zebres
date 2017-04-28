@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public class Player {
 
-    private final Color color;
+    private Color color;
 
     /**
      * Creates a player by giving it a color (green or red).
@@ -76,6 +76,10 @@ public class Player {
             player = "player RED";
         }
         return player;
+    }
+    
+    public void setColor(Color color) {
+        this.color = color;
     }
     
     

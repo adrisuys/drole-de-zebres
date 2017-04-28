@@ -140,4 +140,8 @@ public interface Model {
      */
     void moveImpalaJonesAutomatic () throws GameException;
     
+    Player getInaugurationWinner();
+    
+    public void checkInauguration ();
+    
 }

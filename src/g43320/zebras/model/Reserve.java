@@ -20,13 +20,13 @@ public class Reserve {
      */
     public Reserve() {
         this.animals = new Animal[this.LG][this.COL];
-        sectors = new ArrayList <>();
-        sectors.add(new Sector (1, createsSector1()));
-        sectors.add(new Sector (2, createsSector2()));
-        sectors.add(new Sector (3, createsSector3()));
-        sectors.add(new Sector (4, createsSector4()));
-        sectors.add(new Sector (5, createsSector5()));
-        sectors.add(new Sector (6, createsSector6()));
+        this.sectors = new ArrayList <>();
+        sectors.add(new Sector (1, this, createsSector1()));
+        sectors.add(new Sector (2, this, createsSector2()));
+        sectors.add(new Sector (3, this, createsSector3()));
+        sectors.add(new Sector (4, this, createsSector4()));
+        sectors.add(new Sector (5, this, createsSector5()));
+        sectors.add(new Sector (6, this, createsSector6()));
     }
     
     private Coordinates [] createsSector1() {
@@ -245,6 +245,14 @@ public class Reserve {
         return sectors;
     }
     
-    
+    public int getScore (Color color) {
+        int score = 0;
+        for (Sector sect : sectors) {
+            if (sect.hasMajority(color)) {
+                score = score + sect.getScore();
+            }
+        }
+        return score;
+    }
 
 }

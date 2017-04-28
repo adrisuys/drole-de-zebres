@@ -3,6 +3,7 @@ package g43320.zebras.view;
 import g43320.zebras.model.Animal;
 import static g43320.zebras.model.AnimalState.HIDDEN;
 import g43320.zebras.model.Color;
+import static g43320.zebras.model.Color.GREEN;
 import static g43320.zebras.model.Color.RED;
 import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.ImpalaJones;
@@ -267,7 +268,7 @@ public class Display {
 
     /**
      * Ask the user on which case of the board he/she wants to put an animal.
-     * @impala its position force on the coordinates (column or row)
+     * @param impala its position force on the coordinates (column or row)
      * @return a Coordinates where the animal are to be put.
      */
     public static Coordinates chooseCoordinates(ImpalaJones impala) {
@@ -409,5 +410,21 @@ public class Display {
             default : newString = "\u001B[46;1m" + aString + "\u001B[0m"; break;
         }
         return newString;
+    }
+    
+    public static void getScore(Reserve reserve) {
+        System.out.println("The red player has a grand total of " +reserve.getScore(RED)+" points.");
+        System.out.println("The green player has a grand total of "+reserve.getScore(GREEN)+" points.");
+        if (reserve.getScore(RED)>reserve.getScore(GREEN)) {
+            System.out.println("Therefore, the red player wins! Congratz!");
+        } else if (reserve.getScore(GREEN)>reserve.getScore(RED)) {
+            System.out.println("Therefore, the green player wins! Congratz!");
+        } else {
+            System.out.println("It is a tied game! Congratz to the both of you!");
+        }
+    }
+    
+    public static void displayInaugurationWinner (Player player) {
+        System.out.println(displayPlayerName(player) + " has complete, the first, a sector. He earns 5 points");
     }
 }

@@ -36,12 +36,14 @@ public class Zebras {
             Display.displayReserve(game.getReserve(), game.getImpalaJones());
             Display.displayPlayer(game.getCurrentPlayer());
             putAnimal(game);
+            checkingInauguration(game);
             Display.displayReserve(game.getReserve(), game.getImpalaJones());
             if (!game.isOver()) {
                 moveImpalaJones(game);
             }
         }
         Display.endOfGame();
+        Display.getScore(game.getReserve());
     }
 
     /**
@@ -103,5 +105,15 @@ public class Zebras {
             }
         }
     }
+    
+    public static void checkingInauguration(Model game) {
+        if(game.getInaugurationWinner() == null) {
+                game.checkInauguration();
+                if (game.getInaugurationWinner() != null) {
+                    Display.displayInaugurationWinner(game.getInaugurationWinner());
+                }
+        }        
+    }
+    
 
 }

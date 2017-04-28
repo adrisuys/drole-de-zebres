@@ -16,6 +16,7 @@ public class Game implements Model {
     private Pieces pieces;
     private GameStatus status;
     private Player currentPlayer;
+    private Player inaugurationWinner;
 
     /**
      * Creates a new instance of a Game.
@@ -37,6 +38,8 @@ public class Game implements Model {
 
         int random = (int) ((Math.random() * 2));
         currentPlayer = players.get(random);
+        
+        inaugurationWinner = null;
 
     }
 
@@ -255,7 +258,16 @@ public class Game implements Model {
      */
     @Override
     public int getScore(Color color) {
-        return 0;
+        int score = 0;
+        for (Sector sect : getReserve().getSectors()) {
+            if (sect.hasMajority(color)) {
+                score = score + sect.getScore();
+            }
+        }
+        if (getInaugurationWinner().getColor()==color) {
+            score = score + 5;
+        }
+        return score;
     }
 
     /**
@@ -291,5 +303,31 @@ public class Game implements Model {
         status = GameStatus.ANIMAL;
 
     }
+
+    @Override
+    public Player getInaugurationWinner() {
+        return inaugurationWinner;
+    }
+    
+    @Override
+    public void checkInauguration () {
+        int i = 0;
+        while (i<reserve.getSectors().size() && !reserve.getSectors().get(i).isFull()) {
+            i++;
+        }
+        if (i<reserve.getSectors().size()) {
+            setInaugurationWinner(getCurrentPlayer());
+        }
+    }
+
+    public void setInaugurationWinner(Player inaugurationWinner) {
+        this.inaugurationWinner = inaugurationWinner;
+    }
+    
+    
+    
+    
+    
+    
 
 }
