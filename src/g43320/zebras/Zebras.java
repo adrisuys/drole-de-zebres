@@ -2,8 +2,13 @@ package g43320.zebras;
 
 import g43320.zebras.model.Game;
 import g43320.zebras.model.GameException;
+import g43320.zebras.model.GameStatus;
 import g43320.zebras.model.Model;
+import g43320.zebras.model.Reserve;
+import g43320.zebras.model.Sector;
 import g43320.zebras.view.Display;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Zebras is the main Class controlling the whole game.
@@ -18,7 +23,6 @@ public class Zebras {
      * @param args the arguments of the method.
      */
     public static void main(String[] args) {
-
         Model game = new Game();
         play(game);
 
@@ -43,7 +47,7 @@ public class Zebras {
             }
         }
         Display.endOfGame();
-        Display.getScore(game.getReserve());
+        Display.getScore(game);
     }
 
     /**
@@ -61,7 +65,7 @@ public class Zebras {
             } catch (GameException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 invalid = true;
-            } 
+            }
         }
     }
 
@@ -76,13 +80,19 @@ public class Zebras {
             invalid = false;
             try {
                 game.putAnimal(Display.chooseCoordinates(game.getImpalaJones()), Display.chooseAnimalFromStock());
+                if (game.getStatus() == GameStatus.CROCODILE) {
+                    if (Display.askConfirmation().equals("YES")) {
+                        game.swap(Display.chooseCoordinates(game.getImpalaJones()),Display.confirmGazelle(game.getReserve(),Display.chooseCoordinates(game.getImpalaJones())));
+                    }
+                }
+                game.setStatus(GameStatus.IMPALA);
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
                 invalid = true;
             }
         }
     }
-                
+
     /**
      * Move Impala Jones on his path.
      *
@@ -93,7 +103,7 @@ public class Zebras {
         while (invalid) {
             invalid = false;
             try {
-                if (game.getImpalaJones().findFirst(game.getReserve())>=1 && game.getImpalaJones().findFirst(game.getReserve())<=3) {
+                if (game.getImpalaJones().findFirst(game.getReserve()) >= 1 && game.getImpalaJones().findFirst(game.getReserve()) <= 3) {
                     game.moveImpalaJones(Display.askDistance());
                 } else {
                     Display.warningAutomaticMoveImpala();
@@ -105,15 +115,14 @@ public class Zebras {
             }
         }
     }
-    
+
     public static void checkingInauguration(Model game) {
-        if(game.getInaugurationWinner() == null) {
-                game.checkInauguration();
-                if (game.getInaugurationWinner() != null) {
-                    Display.displayInaugurationWinner(game.getInaugurationWinner());
-                }
-        }        
+        if (game.getInaugurationWinner() == null) {
+            game.checkInauguration();
+            if (game.getInaugurationWinner() != null) {
+                Display.displayInaugurationWinner(game.getInaugurationWinner());
+            }
+        }
     }
-    
 
 }

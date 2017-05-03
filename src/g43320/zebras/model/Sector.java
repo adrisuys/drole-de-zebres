@@ -88,7 +88,9 @@ public class Sector {
         }
         int score = 0;
         for (Coordinates pos : coordinates) {
-            score = score + reserve.getAnimal(pos).getSpecies().getValue();
+            if (reserve.getAnimal(pos).getState()!=AnimalState.HIDDEN) {
+                score = score + reserve.getAnimal(pos).getSpecies().getValue();
+            } 
         }
         return score;
     }

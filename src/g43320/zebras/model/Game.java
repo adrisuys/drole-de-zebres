@@ -2,6 +2,7 @@ package g43320.zebras.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This is the main class of the model, it organizes the game itself.
@@ -11,12 +12,15 @@ import java.util.List;
 public class Game implements Model {
 
     private final List<Player> players;
-    private Reserve reserve;
-    private ImpalaJones impala;
-    private Pieces pieces;
+    private final Reserve reserve;
+    private final ImpalaJones impala;
+    private final Pieces pieces;
     private GameStatus status;
     private Player currentPlayer;
     private Player inaugurationWinner;
+    final static int MAX_MOVE = 3;
+    final static int POINT_INAUGURATION = 5;
+    final static int NB_PLAYER = 2;
 
     /**
      * Creates a new instance of a Game.
@@ -36,12 +40,37 @@ public class Game implements Model {
 
         status = GameStatus.INIT;
 
-        int random = (int) ((Math.random() * 2));
+        Random r = new Random();
+        int random = r.nextInt(NB_PLAYER);
         currentPlayer = players.get(random);
-        
+
         inaugurationWinner = null;
 
     }
+
+//    public Game(Reserve reserve) {
+//        this.reserve = reserve;
+//        players = new ArrayList<>();
+//        Player playerRed = new Player(Color.RED);
+//        Player playerGreen = new Player(Color.GREEN);
+//        players.add(playerRed);
+//        players.add(playerGreen);
+//
+//
+//        impala = new ImpalaJones();
+//
+//        pieces = new Pieces();
+//
+//        status = GameStatus.INIT;
+//
+//        Random r = new Random();
+//        int random = r.nextInt(NB_PLAYER);
+//        currentPlayer = players.get(random);
+//
+//        inaugurationWinner = null;
+//    }
+    
+    
 
     /**
      * Return the stock of Pieces.
@@ -126,19 +155,17 @@ public class Game implements Model {
             if (!reserve.isFree(posAdj)) {
                 animal.action(reserve.getAnimal(posAdj));
                 if (reserve.getAnimal(posAdj).getState() == AnimalState.RUN) {
-                        reserve.getAnimal(posAdj).setState(AnimalState.REST);
-                        pieces.putBackAnimal(reserve.getAnimal(posAdj));
-                        reserve.removeAnimal(posAdj);
+                    reserve.getAnimal(posAdj).setState(AnimalState.REST);
+                    pieces.putBackAnimal(reserve.getAnimal(posAdj));
+                    reserve.removeAnimal(posAdj);
                 }
-                
+            }
+            if (animal.getSpecies() == Species.CROCODILE && reserve.getAnimal(posAdj).getSpecies() == Species.GAZELLE && (!reserve.getSector(position).equals(reserve.getSector(posAdj)))) {
+                status = GameStatus.CROCODILE;
             }
         }
-        status = GameStatus.IMPALA;
+        //status = GameStatus.IMPALA;
     }
-    
-    
-
-    
 
     /**
      * Move Impala Jones some steps forward.
@@ -156,7 +183,7 @@ public class Game implements Model {
         if (status != GameStatus.IMPALA) {
             throw new GameException("It is time for Impala Jones to be moved");
         }
-        if (distance > 3) {
+        if (distance > MAX_MOVE) {
             throw new GameException("The distance must not be greater than 3");
         }
         if (!getImpalaJones().checkMove(reserve, distance)) {
@@ -178,11 +205,7 @@ public class Game implements Model {
      */
     @Override
     public boolean isOver() {
-        int i = 0;
-        while (i < Reserve.LG && reserve.isFullRow(i)) {
-            i++;
-        }
-        return i == Reserve.LG && !getPieces().hasAvailable();
+        return !getPieces().hasAvailable();
     }
 
     /**
@@ -264,8 +287,8 @@ public class Game implements Model {
                 score = score + sect.getScore();
             }
         }
-        if (getInaugurationWinner().getColor()==color) {
-            score = score + 5;
+        if (getInaugurationWinner().getColor() == color) {
+            score = score + POINT_INAUGURATION;
         }
         return score;
     }
@@ -308,14 +331,14 @@ public class Game implements Model {
     public Player getInaugurationWinner() {
         return inaugurationWinner;
     }
-    
+
     @Override
-    public void checkInauguration () {
+    public void checkInauguration() {
         int i = 0;
-        while (i<reserve.getSectors().size() && !reserve.getSectors().get(i).isFull()) {
+        while (i < reserve.getSectors().size() && !reserve.isFullSector()) {
             i++;
         }
-        if (i<reserve.getSectors().size()) {
+        if (i < reserve.getSectors().size()) {
             setInaugurationWinner(getCurrentPlayer());
         }
     }
@@ -323,11 +346,17 @@ public class Game implements Model {
     public void setInaugurationWinner(Player inaugurationWinner) {
         this.inaugurationWinner = inaugurationWinner;
     }
+
+    @Override
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
     
-    
-    
-    
-    
-    
+    public void swap (Coordinates pos1, Coordinates pos2) {
+        Animal temp ;
+        temp = reserve.getAnimal(pos1);
+        reserve.putAnimal(reserve.getAnimal(pos2), pos1);
+        reserve.putAnimal(temp, pos2);
+    }
 
 }

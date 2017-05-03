@@ -40,13 +40,11 @@ public class Pieces {
      */
     private void addGazelle() {
         final int NB_GAZELLE = 6;
-        Animal gazelleGre = new Animal(Species.GAZELLE, Color.GREEN);
-        Animal gazelleRed = new Animal(Species.GAZELLE, Color.RED);
         for (int i = 0; i < NB_GAZELLE; i++) {
-            getAnimals().add(gazelleGre);
+            getAnimals().add(new Animal (Species.GAZELLE, Color.GREEN));
         }
         for (int i = 0; i < NB_GAZELLE; i++) {
-            getAnimals().add(gazelleRed);
+            getAnimals().add(new Animal(Species.GAZELLE, Color.RED));
         }
     }
 
@@ -75,13 +73,11 @@ public class Pieces {
      */
     private void addZebra() {
         final int NB_ZEBRA = 5;
-        Animal zebraGre = new Animal(Species.ZEBRA, Color.GREEN);
-        Animal zebraRed = new Animal(Species.ZEBRA, Color.RED);
         for (int i = 0; i < NB_ZEBRA; i++) {
-            getAnimals().add(zebraGre);
+            getAnimals().add(new Animal(Species.ZEBRA, Color.GREEN));
         }
         for (int i = 0; i < NB_ZEBRA; i++) {
-            getAnimals().add(zebraRed);
+            getAnimals().add(new Animal(Species.ZEBRA, Color.RED));
         }
     }
 
@@ -90,13 +86,11 @@ public class Pieces {
      */
     private void addCrocodile() {
         final int NB_CROCODILE = 2;
-        Animal crocoGre = new Animal(Species.CROCODILE, Color.GREEN);
-        Animal crocoRed = new Animal(Species.CROCODILE, Color.RED);
         for (int i = 0; i < NB_CROCODILE; i++) {
-            getAnimals().add(crocoGre);
+            getAnimals().add(new Animal(Species.CROCODILE, Color.GREEN));
         }
         for (int i = 0; i < NB_CROCODILE; i++) {
-            getAnimals().add(crocoRed);
+            getAnimals().add(new Animal(Species.CROCODILE, Color.RED));
         }
     }
 

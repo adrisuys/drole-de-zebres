@@ -36,7 +36,7 @@ public class ImpalaJones {
      * @throws IllegalArgumentException if the nb is greater than 21
      */
     public void init(int nb) {
-        if (nb > 21) {
+        if (nb > POSITION_MAX) {
             throw new IllegalArgumentException("Position not valid");
         }
         position = nb;
@@ -50,11 +50,8 @@ public class ImpalaJones {
      */
     public void move(int distance) {
 
-        if (position + distance > 21) {
-            position = ((position+distance) % POSITION_MAX) - 1;
-        } else {
-            position = position + distance;
-        }
+        position = (position+distance) % (POSITION_MAX + 1);
+        
 
     }
 
@@ -103,33 +100,11 @@ public class ImpalaJones {
      */
     public int getColumn() {
         int column = -1;
-        switch (position) {
-            case 0:
-            case 16:
-                column = 0;
-                break;
-            case 1:
-            case 15:
-                column = 1;
-                break;
-            case 2:
-            case 14:
-                column = 2;
-                break;
-            case 3:
-            case 13:
-                column = 3;
-                break;
-            case 4:
-            case 12:
-                column = 4;
-                break;
-            case 5:
-            case 11:
-                column = 5;
-                break;
-            default: ;
-                break;
+        if (isUp()) {
+            column = position;
+        }
+        if (isDown()) {
+            column = Math.abs(position - (Reserve.COL + Reserve.LG + Reserve.COL - 1));
         }
         return column;
     }
@@ -143,29 +118,11 @@ public class ImpalaJones {
      */
     public int getRow() {
         int row = -1;
-        switch (position) {
-            case 6:
-            case 21:
-                row = 0;
-                break;
-            case 7:
-            case 20:
-                row = 1;
-                break;
-            case 8:
-            case 19:
-                row = 2;
-                break;
-            case 9:
-            case 18:
-                row = 3;
-                break;
-            case 10:
-            case 17:
-                row = 4;
-                break;
-            default: ;
-                break;
+        if (isRight()) {
+            row = (position % Reserve.COL);
+        }
+        if (isLeft()) {
+            row = Math.abs(position - (Reserve.COL + Reserve.LG + Reserve.COL + Reserve.LG - 1));
         }
         return row;
     }
@@ -178,7 +135,7 @@ public class ImpalaJones {
      * @return true if the move is valid, false if it is not.
      */
     public boolean checkMove(Reserve reserve, int distance) {
-        move(distance);
+        position = position + distance;
         boolean moveChecked = false;
         int row = getRow();
         int column = getColumn();

@@ -144,4 +144,8 @@ public interface Model {
     
     public void checkInauguration ();
     
+    void setStatus(GameStatus status);
+    
+    void swap (Coordinates pos1, Coordinates pos2);
+    
 }

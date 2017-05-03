@@ -28,6 +28,13 @@ public class Reserve {
         sectors.add(new Sector (5, this, createsSector5()));
         sectors.add(new Sector (6, this, createsSector6()));
     }
+
+//    public Reserve(List <Sector> sectors) {
+//        this.sectors = sectors;
+//        this.animals = new Animal[this.LG][this.COL];
+//    }
+    
+    
     
     private Coordinates [] createsSector1() {
         Coordinates [] coord1 = new Coordinates [5];
@@ -254,5 +261,25 @@ public class Reserve {
         }
         return score;
     }
+    
+    public boolean isFullSector() {
+        int i=0;
+        while (i<getSectors().size() && !getSectors().get(i).isFull()) {
+            i++;
+        }
+        return i==getSectors().size();
+    }
+    
+    public int countGazelleNearby (Coordinates position) {
+        List<Coordinates> adjacents = getAdjacents(position);
+        int cpt = 0;
+        for (Coordinates posAdj : adjacents) {
+            if (getAnimal(posAdj).getSpecies()==Species.GAZELLE) {
+                cpt++;
+            }
+        }
+        return cpt;
+    }
+    
 
 }

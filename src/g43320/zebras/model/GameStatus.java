@@ -20,4 +20,9 @@ public enum GameStatus {
      * A player move Impala Jones on its path.
      */
     IMPALA,
+    
+    /**
+     * A crocodile is put beside a gazelle, the player has to possibility to swap them
+     */
+    CROCODILE;
 }

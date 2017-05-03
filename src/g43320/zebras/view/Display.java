@@ -7,6 +7,7 @@ import static g43320.zebras.model.Color.GREEN;
 import static g43320.zebras.model.Color.RED;
 import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.ImpalaJones;
+import g43320.zebras.model.Model;
 import g43320.zebras.model.Pieces;
 import g43320.zebras.model.Player;
 import g43320.zebras.model.Reserve;
@@ -122,12 +123,16 @@ public class Display {
         String animalStr;
         animalStr = animal.getSpecies().name().substring(0, 1);
         if (animal.getState() == HIDDEN) {
-            animalStr = "X";
+            if (animal.getColor()==RED) {
+                animalStr = "X";
+            } else {
+                animalStr = "x";
+            }
         }
         if (animal.getColor() == RED) {
-            return "\u001B[31m" + animal + "\u001B[0m";
+            return animalStr;
         } else {
-            return "\u001B[32m" + animal + "\u001B[0m";
+            return animalStr.toLowerCase();
         }
     }
 
@@ -146,7 +151,7 @@ public class Display {
         //ligne 9
         String[] impalaDown = new String[]{".", ".", ".", ".", ".", "."};
         aString = displayImpalaJonesPathUpandDown(aString, impalaDown, impala.isDown(), impala);
-        aString = aString + "Board legend : X for hidden animal " + "\n";
+        aString = aString + "Board legend : X for hidden animal, Upper case for Red animals and lower case for Green " + "\n";
         return aString;
     }
 
@@ -412,12 +417,12 @@ public class Display {
         return newString;
     }
     
-    public static void getScore(Reserve reserve) {
-        System.out.println("The red player has a grand total of " +reserve.getScore(RED)+" points.");
-        System.out.println("The green player has a grand total of "+reserve.getScore(GREEN)+" points.");
-        if (reserve.getScore(RED)>reserve.getScore(GREEN)) {
+    public static void getScore(Model game) {
+        System.out.println("The red player has a grand total of " +game.getScore(RED)+" points.");
+        System.out.println("The green player has a grand total of "+game.getScore(GREEN)+" points.");
+        if (game.getScore(RED)>game.getScore(GREEN)) {
             System.out.println("Therefore, the red player wins! Congratz!");
-        } else if (reserve.getScore(GREEN)>reserve.getScore(RED)) {
+        } else if (game.getScore(GREEN)>game.getScore(RED)) {
             System.out.println("Therefore, the green player wins! Congratz!");
         } else {
             System.out.println("It is a tied game! Congratz to the both of you!");
@@ -427,4 +432,59 @@ public class Display {
     public static void displayInaugurationWinner (Player player) {
         System.out.println(displayPlayerName(player) + " has complete, the first, a sector. He earns 5 points");
     }
+    
+    public static String yesOrNo (Scanner clavier) {
+        String confirmUser;
+        String confirm;
+        confirmUser = clavier.next();
+        switch (confirmUser.toUpperCase()) {
+            case "YES" : confirm = "YES";
+            case "NO" : confirm = "NO";
+            default : confirm = null;
+        }
+        return confirm;
+    }
+    
+    public static String askConfirmation() {
+        String confirmation;
+        Scanner clavier = new Scanner(System.in);
+        System.out.println("You just put a crocodile beside a gazelle, you may swap them. Do you want to do it? YES or NO");
+        System.out.print("> ");
+        confirmation = yesOrNo(clavier);
+        while (confirmation == null) {
+            System.out.println("You did not enter a correct answer between YES or NO.");
+            System.out.print("> ");
+            confirmation = yesOrNo(clavier);
+        }
+        return confirmation;
+    }
+    
+    public static Coordinates confirmGazelle(Reserve reserve, Coordinates position) {
+        System.out.println("There is(are) "+reserve.countGazelleNearby(position)+" gazelle(s) around the crocodile");
+        System.out.println("Please confirm the coordinates of the gazelle you want to swap with your crocodile");
+        Scanner clavier = new Scanner (System.in);
+        Coordinates chosenCoord;
+        do {
+            int row = chooseRow();
+            int col = chooseColumn();
+            chosenCoord = new Coordinates (row, col);
+        } while (reserve.getAnimal(chosenCoord).getSpecies() != Species.GAZELLE);
+        return chosenCoord;
+    }
+    
+    public static int chooseGame() {
+        Scanner clavier = new Scanner (System.in);
+        System.out.println("There is two versions of this game.");
+        System.out.println("Press 1 if you want to play with the normal reserve");
+        System.out.println("Press 2 if you want to play with the President's reserve");
+        int nb;
+        nb = askNumber(clavier);
+        while (nb<1 || nb>2) {
+            System.out.println("You did not enter either 1 or 2! Re-try!");
+            nb = askNumber(clavier);
+        }
+        return nb;
+    }
+    
+    
 }
