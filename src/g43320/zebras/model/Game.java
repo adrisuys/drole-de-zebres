@@ -160,7 +160,6 @@ public class Game implements Model {
                     reserve.removeAnimal(posAdj);
                 }
                 if (animal.getSpecies() == Species.CROCODILE && reserve.getAnimal(posAdj).getSpecies() == Species.GAZELLE && (!reserve.getSector(position).equals(reserve.getSector(posAdj)))) {
-                    
                     status = GameStatus.CROCODILE;
                 }
             }  
@@ -346,7 +345,7 @@ public class Game implements Model {
         while (i < reserve.getSectors().size() && !reserve.isFullSector(i)) {
             i++;
         }
-        if (reserve.isFullSector(i)) {
+        if (i<reserve.getSectors().size()) {
             setInaugurationWinner(getCurrentPlayer());
         }
     }

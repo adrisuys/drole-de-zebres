@@ -80,7 +80,9 @@ public class Zebras {
                 game.putAnimal(Display.chooseCoordinates(game.getImpalaJones()), Display.chooseAnimalFromStock());
                 //if (game.getStatus() == GameStatus.CROCODILE) {
                 //    if (Display.askConfirmation().equals("YES")) {
-                //        game.swap(Display.confirmPosition(game.getReserve()),Display.confirmGazelle(game.getReserve(),coord));
+                //        Coordinates posCroco = coord;
+                //        Coordinates posGazelle = Display.confirmGazell(game.getReserve(), coord);
+                //        game.swap(posCroco, posGazelle);
                 //    }
                 //}
                 //game.setStatus(GameStatus.IMPALA);
