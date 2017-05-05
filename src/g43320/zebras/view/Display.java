@@ -391,7 +391,7 @@ public class Display {
      * Display a warning when Impala Jones is moved automocally (by the system and not one of the player).
      */
     public static void warningAutomaticMoveImpala () {
-        System.out.println("!!! You have no choice, Impala Jones will automatically reach its best position !!!");
+        System.out.println("\u001B[35m"+"!!! You have no choice, Impala Jones will automatically reach its best position !!!"+"\u001B[0m");
     }
     
     /**
@@ -445,7 +445,7 @@ public class Display {
      * @param player the winning player.
      */
     public static void displayInaugurationWinner (Player player) {
-        System.out.println(displayPlayerName(player) + " has complete, the first, a sector. He earns 5 points");
+        System.out.println("\u001B[35m"+displayPlayerName(player) + " has complete, the first, a sector. He earns 5 points"+"\u001B[0m");
     }
     
     /**
