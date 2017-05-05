@@ -149,9 +149,13 @@ public class Animal {
         }
     }
     
+    /**
+     * Get the value of each animal.
+     * @return the value of the animal 
+     */
     public int getValue () {
         int value;
-        if (state == AnimalState.HIDDEN) {
+        if (state.equals(AnimalState.HIDDEN)) {
             value = 0;
         } else {
             value = species.getValue();

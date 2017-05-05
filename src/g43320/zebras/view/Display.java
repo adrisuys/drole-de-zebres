@@ -151,7 +151,7 @@ public class Display {
         //ligne 9
         String[] impalaDown = new String[]{".", ".", ".", ".", ".", "."};
         aString = displayImpalaJonesPathUpandDown(aString, impalaDown, impala.isDown(), impala);
-        aString = aString + "Board legend : X for hidden animal, Upper case for Red animals and lower case for Green " + "\n";
+        aString = aString + "Board legend : X for hidden animal, Upper case for Red animals and lower case for Green ones" + "\n";
         return aString;
     }
 
@@ -225,7 +225,7 @@ public class Display {
      * @return the specie of the selected animal
      */
     public static Species chooseAnimalFromStock() {
-        Species species = null;
+        Species species;
         Scanner clavier = new Scanner(System.in);
         System.out.println("It is time to choose an animal to be placed");
         System.out.println("Choose a animal between ELEPHANT, LION, ZEBRA, GAZELLE and CROCODILE");
@@ -279,7 +279,6 @@ public class Display {
     public static Coordinates chooseCoordinates(ImpalaJones impala) {
         int row;
         int column;
-        Scanner clavier = new Scanner(System.in);
         System.out.println("It is time to choose a coordinates for an animal");
         Coordinates position = null;
         boolean invalid = true;
@@ -402,6 +401,14 @@ public class Display {
         System.out.println("The game is over! Congratz to the two of you! May the best wins");
     }
     
+    /**
+     * Color the background of a String on a case of the board depending on the sector the case belong to.
+     * @param reserve the reserve containing the cases
+     * @param row the row of the case
+     * @param col the column ot the case
+     * @param aString a String 
+     * @return a colored String.
+     */
     public static String coloringBoard (Reserve reserve, int row, int col, String aString) {
         Coordinates pos = new Coordinates (row,col);
         Sector sector = reserve.getSector(pos);
@@ -417,6 +424,10 @@ public class Display {
         return newString;
     }
     
+    /**
+     * Gets the score of each player and displays it.
+     * @param game the game of Drôles de Zèbres.
+     */
     public static void getScore(Model game) {
         System.out.println("The red player has a grand total of " +game.getScore(RED)+" points.");
         System.out.println("The green player has a grand total of "+game.getScore(GREEN)+" points.");
@@ -429,22 +440,35 @@ public class Display {
         }
     }
     
+    /**
+     * Display a message announcing that a player has won the inauguration piece.
+     * @param player the winning player.
+     */
     public static void displayInaugurationWinner (Player player) {
         System.out.println(displayPlayerName(player) + " has complete, the first, a sector. He earns 5 points");
     }
     
+    /**
+     * Ask yes or no to the user
+     * @param clavier a Scanner
+     * @return YES or NO or null if the user has entered none of the 2 words.
+     */
     public static String yesOrNo (Scanner clavier) {
         String confirmUser;
         String confirm;
         confirmUser = clavier.next();
         switch (confirmUser.toUpperCase()) {
-            case "YES" : confirm = "YES";
-            case "NO" : confirm = "NO";
-            default : confirm = null;
+            case "YES" : confirm = "YES"; break;
+            case "NO" : confirm = "NO"; break;
+            default : confirm = null; break;
         }
         return confirm;
     }
     
+    /**
+     * Ask confirmation to a player before a swap between 2 animals
+     * @return Yes or No.
+     */
     public static String askConfirmation() {
         String confirmation;
         Scanner clavier = new Scanner(System.in);
@@ -459,10 +483,15 @@ public class Display {
         return confirmation;
     }
     
+    /**
+     * Ask the user to confirm the position of the gazelle he wants to swap with a crocodile.
+     * @param reserve the reserve on which the animals are put 
+     * @param position the position of the crocodile
+     * @return the position of the gazelle he wants to swap with the crocodile
+     */
     public static Coordinates confirmGazelle(Reserve reserve, Coordinates position) {
         System.out.println("There is(are) "+reserve.countGazelleNearby(position)+" gazelle(s) around the crocodile");
         System.out.println("Please confirm the coordinates of the gazelle you want to swap with your crocodile");
-        Scanner clavier = new Scanner (System.in);
         Coordinates chosenCoord;
         do {
             int row = chooseRow();
@@ -472,6 +501,21 @@ public class Display {
         return chosenCoord;
     }
     
+    public static Coordinates confirmPosition(Reserve reserve) {
+        System.out.println("Please confirm the coordinates of the crocodile you just put");
+        Coordinates chosenCoord;
+        do {
+            int row = chooseRow();
+            int col = chooseColumn();
+            chosenCoord = new Coordinates (row, col);
+        } while (reserve.getAnimal(chosenCoord).getSpecies() != Species.CROCODILE);
+        return chosenCoord;
+    }
+    
+    /**
+     * Ask the user with which version of the game he wants to play.
+     * @return 1 if he wants to play with the normal version, 2 with the other.
+     */
     public static int chooseGame() {
         Scanner clavier = new Scanner (System.in);
         System.out.println("There is two versions of this game.");

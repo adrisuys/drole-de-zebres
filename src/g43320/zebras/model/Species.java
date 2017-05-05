@@ -28,12 +28,16 @@ public enum Species {
      */
     CROCODILE(0);
     
-    private int value;
+    private final int value;
 
     private Species(int value) {
         this.value = value;
     }
 
+    /**
+     * Get the value of a Specie.
+     * @return the value of a Specie
+     */
     public int getValue() {
         return value;
     }

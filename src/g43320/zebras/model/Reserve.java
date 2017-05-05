@@ -13,7 +13,7 @@ public class Reserve {
     private final Animal[][] animals;
     final static int COL = 6;
     final static int LG = 5;
-    private List <Sector> sectors;
+    private final List <Sector> sectors;
 
     /**
      * Creates a reserve, which is a 2D array of 5x6 of Animals.
@@ -238,6 +238,11 @@ public class Reserve {
         getAnimals()[pos.getRow()][pos.getColumn()] = null;
     }
     
+    /**
+     * Get the sector that contains a given coordinate.
+     * @param coord a given coordinates of the board
+     * @return the sector containing the given coordinate
+     */
     public Sector getSector (Coordinates coord) {
         Sector sectorContaining = null;
         for( Sector sect : sectors) {
@@ -248,10 +253,19 @@ public class Reserve {
         return sectorContaining;
     }
 
+    /**
+     * Get the list of sectors of the reserve.
+     * @return the list of sectors of the reserve 
+     */
     public List<Sector> getSectors() {
         return sectors;
     }
     
+    /**
+     * Get the score of a player given by its color.
+     * @param color the color associated to a player
+     * @return the score of a player given by its color
+     */
     public int getScore (Color color) {
         int score = 0;
         for (Sector sect : sectors) {
@@ -262,14 +276,20 @@ public class Reserve {
         return score;
     }
     
-    public boolean isFullSector() {
-        int i=0;
-        while (i<getSectors().size() && !getSectors().get(i).isFull()) {
-            i++;
-        }
-        return i==getSectors().size();
+    /**
+     * Check if all the coordinates forming a sector are filled with animals.
+     * @param i the number of the sector that must be checked
+     * @return true if the sector is full, false otherwise.
+     */
+    public boolean isFullSector(int i) {
+        return getSectors().get(i).isFull();
     }
     
+    /**
+     * Count the number of gazelle on the adjacents cases of a given position.
+     * @param position a coordinate on the board
+     * @return the number of gazelle on the adjacents cases of a given position
+     */
     public int countGazelleNearby (Coordinates position) {
         List<Coordinates> adjacents = getAdjacents(position);
         int cpt = 0;

@@ -78,6 +78,10 @@ public class Player {
         return player;
     }
     
+    /**
+     * Set the color of a player to a defined color
+     * @param color a color associated to a player
+     */
     public void setColor(Color color) {
         this.color = color;
     }

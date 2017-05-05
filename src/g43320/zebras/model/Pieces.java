@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Pieces {
 
-    private List<Animal> animals;
+    private final List<Animal> animals;
 
     /**
      * Creates a stock of pieces.

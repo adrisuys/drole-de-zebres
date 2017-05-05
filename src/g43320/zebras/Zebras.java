@@ -1,14 +1,11 @@
 package g43320.zebras;
 
+import g43320.zebras.model.Coordinates;
 import g43320.zebras.model.Game;
 import g43320.zebras.model.GameException;
 import g43320.zebras.model.GameStatus;
 import g43320.zebras.model.Model;
-import g43320.zebras.model.Reserve;
-import g43320.zebras.model.Sector;
 import g43320.zebras.view.Display;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Zebras is the main Class controlling the whole game.
@@ -79,13 +76,14 @@ public class Zebras {
         while (invalid) {
             invalid = false;
             try {
+                //Coordinates coord = Display.chooseCoordinates(game.getImpalaJones());
                 game.putAnimal(Display.chooseCoordinates(game.getImpalaJones()), Display.chooseAnimalFromStock());
-                if (game.getStatus() == GameStatus.CROCODILE) {
-                    if (Display.askConfirmation().equals("YES")) {
-                        game.swap(Display.chooseCoordinates(game.getImpalaJones()),Display.confirmGazelle(game.getReserve(),Display.chooseCoordinates(game.getImpalaJones())));
-                    }
-                }
-                game.setStatus(GameStatus.IMPALA);
+                //if (game.getStatus() == GameStatus.CROCODILE) {
+                //    if (Display.askConfirmation().equals("YES")) {
+                //        game.swap(Display.confirmPosition(game.getReserve()),Display.confirmGazelle(game.getReserve(),coord));
+                //    }
+                //}
+                //game.setStatus(GameStatus.IMPALA);
             } catch (GameException ex) {
                 System.out.println(ex.getMessage());
                 invalid = true;
@@ -116,11 +114,15 @@ public class Zebras {
         }
     }
 
+    /**
+     * Check if the inauguration piece has been given to one of the player.
+     * @param game the game of Drôles de Zèbres
+     */
     public static void checkingInauguration(Model game) {
         if (game.getInaugurationWinner() == null) {
             game.checkInauguration();
             if (game.getInaugurationWinner() != null) {
-                Display.displayInaugurationWinner(game.getInaugurationWinner());
+                Display.displayInaugurationWinner(game.getCurrentPlayer());
             }
         }
     }

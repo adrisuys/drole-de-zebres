@@ -140,12 +140,28 @@ public interface Model {
      */
     void moveImpalaJonesAutomatic () throws GameException;
     
+    /**
+     * Get the player who gets the Inauguration piece
+     * @return the player who gets the Inauguration piece
+     */
     Player getInaugurationWinner();
     
+    /**
+     * Check if a player has complete, the first a sector, and give the Inauguration piece to that player
+     */
     public void checkInauguration ();
     
+    /**
+     * Set the the status of the game to a defined status.
+     * @param status the status of the game
+     */
     void setStatus(GameStatus status);
     
+    /**
+     * Swap a animal put on pos1 with another put on pos2
+     * @param pos1 a position on the board
+     * @param pos2 a position on the board
+     */
     void swap (Coordinates pos1, Coordinates pos2);
     
 }

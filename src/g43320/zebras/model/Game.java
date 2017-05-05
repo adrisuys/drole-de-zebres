@@ -159,12 +159,13 @@ public class Game implements Model {
                     pieces.putBackAnimal(reserve.getAnimal(posAdj));
                     reserve.removeAnimal(posAdj);
                 }
-            }
-            if (animal.getSpecies() == Species.CROCODILE && reserve.getAnimal(posAdj).getSpecies() == Species.GAZELLE && (!reserve.getSector(position).equals(reserve.getSector(posAdj)))) {
-                status = GameStatus.CROCODILE;
-            }
+                if (animal.getSpecies() == Species.CROCODILE && reserve.getAnimal(posAdj).getSpecies() == Species.GAZELLE && (!reserve.getSector(position).equals(reserve.getSector(posAdj)))) {
+                    
+                    status = GameStatus.CROCODILE;
+                }
+            }  
         }
-        //status = GameStatus.IMPALA;
+        status = GameStatus.IMPALA;
     }
 
     /**
@@ -327,31 +328,52 @@ public class Game implements Model {
 
     }
 
+    /**
+     * Get the player who gets the Inauguration piece
+     * @return the player who gets the Inauguration piece
+     */
     @Override
     public Player getInaugurationWinner() {
         return inaugurationWinner;
     }
 
+    /**
+     * Check if a player has complete, the first a sector, and give the Inauguration piece to that player
+     */
     @Override
     public void checkInauguration() {
         int i = 0;
-        while (i < reserve.getSectors().size() && !reserve.isFullSector()) {
+        while (i < reserve.getSectors().size() && !reserve.isFullSector(i)) {
             i++;
         }
-        if (i < reserve.getSectors().size()) {
+        if (reserve.isFullSector(i)) {
             setInaugurationWinner(getCurrentPlayer());
         }
     }
 
+    /**
+     * Set the inauguration Winner with the attribute of a player.
+     * @param inaugurationWinner the winner of the inauguration piece
+     */
     public void setInaugurationWinner(Player inaugurationWinner) {
         this.inaugurationWinner = inaugurationWinner;
     }
 
+    /**
+     * Set the the status of the game to a defined status.
+     * @param status the status of the game
+     */
     @Override
     public void setStatus(GameStatus status) {
         this.status = status;
     }
     
+    /**
+     * Swap a animal put on pos1 with another put on pos2
+     * @param pos1 a position on the board
+     * @param pos2 a position on the board
+     */
+    @Override
     public void swap (Coordinates pos1, Coordinates pos2) {
         Animal temp ;
         temp = reserve.getAnimal(pos1);
